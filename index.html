@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f2f0ea" />
+    <meta
+      name="description"
+      content="Meet elchai pulse — a voice assistant that answers from your company’s own documents."
+    />
+    <script>
+      (() => {
+        document.documentElement.classList.add("js");
+        try {
+          const savedTheme = localStorage.getItem("elchai-theme");
+          const theme =
+            savedTheme ||
+            (window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "dark"
+              : "light");
+          document.documentElement.dataset.theme = theme;
+          document.querySelector('meta[name="theme-color"]').content =
+            theme === "dark" ? "#101116" : "#f2f0ea";
+        } catch {
+          document.documentElement.dataset.theme = "light";
+        }
+      })();
+    </script>
+    <title>elchai pulse — your company’s knowledge, answered out loud</title>
+  </head>
+  <body>
+    <!--
+      THESIS: Pulse is intelligence given presence; this refuses the generic dark neon AI dashboard.
+      OWN-WORLD: Porcelain fields, ink typography, specimen marks, teal and lilac material, precise black controls.
+      STORY: Identify the voice assistant, understand the document-grounded interaction, then book a walkthrough.
+      FIRST VIEWPORT: Quiet navigation above a split statement and monumental moving orb, with the action directly below the product definition.
+      FORM: Acoustic specimen dossier, seventh grounded direction; central-object staging; seed c345e89e.
+    -->
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

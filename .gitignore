@@ -1,0 +1,20 @@
+# Dependencies and build output
+node_modules/
+dist/
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts
+
+# Local environment and deployment state
+.env
+.env.*
+!.env.example
+.vercel/
+
+# Local design review artifacts
+outputs/
+work/
+public/media/pulse-orb-higgsfield.mp4
+
+# Operating-system files
+.DS_Store
