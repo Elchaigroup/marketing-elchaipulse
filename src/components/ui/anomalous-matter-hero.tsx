@@ -1,7 +1,8 @@
 import { lazy, Suspense } from "react";
-import { ArrowUpRight, Play } from "lucide-react";
+import { Play } from "lucide-react";
 import { BrandLockup } from "./brand-lockup";
 import { MotionAwareVideo } from "./motion-aware-video";
+import { SlideTabs } from "./slide-tabs";
 import { ThemeToggle } from "./theme-toggle";
 
 export const GenerativeArtScene = lazy(() =>
@@ -23,22 +24,22 @@ export function AnomalousMatterHero({
 }: AnomalousMatterHeroProps) {
   return (
     <section id="top" role="banner" className="pulse-hero">
+      <a
+        className="pulse-page-brand pulse-wordmark focus-ring"
+        href="#top"
+        aria-label="Pulse — back to top"
+      >
+        <BrandLockup compact />
+      </a>
+
       <nav className="pulse-nav" aria-label="Primary navigation">
-        <a className="pulse-wordmark focus-ring" href="#top" aria-label="Elchai Pulse home">
-          <BrandLockup />
-        </a>
-        <div className="pulse-nav-links">
-          <a className="pulse-text-link focus-ring" href="#product">
-            The problem
-          </a>
-          <a className="pulse-text-link focus-ring" href="#thesis">
-            How it works
+        <span aria-hidden="true" />
+        <SlideTabs />
+        <div className="pulse-nav-utilities">
+          <a className="pulse-auth-link focus-ring" href="/login">
+            Sign in
           </a>
           <ThemeToggle />
-          <a className="pulse-briefing-link focus-ring" href="#briefing">
-            Book a walkthrough
-            <ArrowUpRight size={15} strokeWidth={1.8} aria-hidden="true" />
-          </a>
         </div>
       </nav>
 

@@ -164,7 +164,6 @@ function App() {
           <MotionAwareVideo src="/media/pulse-orb.mp4" preload="none" />
         </div>
         <div className="pulse-closing-content" data-reveal="closing">
-          <p className="pulse-kicker pulse-brand-kicker">elchai pulse</p>
           <h2 id="closing-title">See it answer a question about your own documents.</h2>
           <p>
             Point Pulse at a folder of your material and ask something only your
@@ -182,7 +181,7 @@ function App() {
 
       <footer className="pulse-footer">
         <a className="pulse-wordmark focus-ring" href="#top" aria-label="Back to top">
-          <BrandLockup compact />
+          <BrandLockup compact surface="dark" />
         </a>
         <p>Your knowledge, answered out loud.</p>
         <p>© {new Date().getFullYear()} elchai</p>

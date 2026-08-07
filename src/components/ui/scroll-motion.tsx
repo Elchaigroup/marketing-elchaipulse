@@ -2,6 +2,63 @@ import { useEffect } from "react";
 
 export function ScrollMotion() {
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    let cleanUrlFrame = 0;
+
+    const removeHashFromUrl = () => {
+      if (!window.location.hash) return;
+      window.history.replaceState(
+        window.history.state,
+        "",
+        `${window.location.pathname}${window.location.search}`,
+      );
+    };
+
+    const handleSectionLink = (event: MouseEvent) => {
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey ||
+        !(event.target instanceof Element)
+      ) {
+        return;
+      }
+
+      const link = event.target.closest('a[href^="#"]') as HTMLAnchorElement | null;
+      const hash = link?.getAttribute("href");
+      if (!hash || hash === "#") return;
+
+      const target = document.getElementById(decodeURIComponent(hash.slice(1)));
+      if (!target) return;
+
+      event.preventDefault();
+      target.scrollIntoView({
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+        block: "start",
+      });
+      removeHashFromUrl();
+    };
+
+    document.addEventListener("click", handleSectionLink);
+    window.addEventListener("hashchange", removeHashFromUrl);
+
+    if (window.location.hash) {
+      cleanUrlFrame = window.requestAnimationFrame(removeHashFromUrl);
+    }
+
+    return () => {
+      document.removeEventListener("click", handleSectionLink);
+      window.removeEventListener("hashchange", removeHashFromUrl);
+      if (cleanUrlFrame) window.cancelAnimationFrame(cleanUrlFrame);
+    };
+  }, []);
+
+  useEffect(() => {
     const elements = Array.from(
       document.querySelectorAll<HTMLElement>("[data-reveal]"),
     );
