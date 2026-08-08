@@ -171,7 +171,7 @@ function App() {
           </p>
           <a
             className="pulse-closing-action focus-ring"
-            href="mailto:hello@elchai.com?subject=Elchai%20Pulse%20walkthrough"
+            href="mailto:pulse@elchaigroup.com?subject=Elchai%20Pulse%20walkthrough"
           >
             Book a walkthrough
             <ArrowUpRight size={20} strokeWidth={1.7} aria-hidden="true" />
