@@ -767,9 +767,10 @@ a {
 }
 
 .pulse-orbit-inner::before {
-  bottom: 10%;
-  left: 16%;
+  top: 50%;
+  left: 0;
   background: var(--violet);
+  transform: translate(-50%, -50%);
 }
 
 .pulse-orbit-inner::after {

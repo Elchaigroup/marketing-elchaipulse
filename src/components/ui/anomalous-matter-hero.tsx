@@ -5,6 +5,9 @@ import { MotionAwareVideo } from "./motion-aware-video";
 import { SlideTabs } from "./slide-tabs";
 import { ThemeToggle } from "./theme-toggle";
 
+// Set to true when the authentication experience is ready to launch.
+const SIGN_IN_ENABLED = false;
+
 export const GenerativeArtScene = lazy(() =>
   import("./generative-art-scene").then((module) => ({
     default: module.GenerativeArtScene,
@@ -36,9 +39,11 @@ export function AnomalousMatterHero({
         <span aria-hidden="true" />
         <SlideTabs />
         <div className="pulse-nav-utilities">
-          <a className="pulse-auth-link focus-ring" href="/login">
-            Sign in
-          </a>
+          {SIGN_IN_ENABLED && (
+            <a className="pulse-auth-link focus-ring" href="/login">
+              Sign in
+            </a>
+          )}
           <ThemeToggle />
         </div>
       </nav>
