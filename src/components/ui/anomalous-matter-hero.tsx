@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { Play } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { BrandLockup } from "./brand-lockup";
 import { MotionAwareVideo } from "./motion-aware-video";
 import { SlideTabs } from "./slide-tabs";
@@ -18,12 +18,14 @@ type AnomalousMatterHeroProps = {
   subtitle?: string;
   description?: string;
   orbVideoSrc?: string;
+  orbPosterSrc?: string;
 };
 
 export function AnomalousMatterHero({
   subtitle = "Your company’s knowledge, answered out loud.",
-  description = "A voice assistant that answers in plain language from your own documents.",
+  description = "Ask by voice or text. Pulse retrieves the passages that bear on your question from your own documents, then answers in plain language.",
   orbVideoSrc,
+  orbPosterSrc,
 }: AnomalousMatterHeroProps) {
   return (
     <section id="top" role="banner" className="pulse-hero">
@@ -53,11 +55,14 @@ export function AnomalousMatterHero({
           <h1>{subtitle}</h1>
           <p className="pulse-hero-description">{description}</p>
           <div className="pulse-hero-actions">
-            <a className="pulse-demo-action focus-ring" href="#demo">
+            <a
+              className="pulse-demo-action focus-ring"
+              href="mailto:pulse@elchaigroup.com?subject=Elchai%20Pulse%20demo"
+            >
               <span className="pulse-demo-action-icon" aria-hidden="true">
-                <Play size={14} strokeWidth={2} fill="currentColor" />
+                <ArrowUpRight size={15} strokeWidth={2} />
               </span>
-              See how it works
+              Contact for demo
               <span className="pulse-demo-action-glint" aria-hidden="true" />
             </a>
           </div>
@@ -84,6 +89,7 @@ export function AnomalousMatterHero({
                 <MotionAwareVideo
                   className="pulse-orb-video"
                   src={orbVideoSrc}
+                  poster={orbPosterSrc}
                   preload="auto"
                 />
               ) : (

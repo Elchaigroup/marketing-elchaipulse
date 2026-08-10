@@ -64,7 +64,7 @@ export function ScrollMotion() {
     );
     const ambientElements = Array.from(
       document.querySelectorAll<HTMLElement>(
-        ".pulse-orb-stage, .pulse-voice-object",
+        ".pulse-orb-stage, .pulse-voice-object, .pulse-security-story",
       ),
     );
     const prefersReducedMotion = window.matchMedia(

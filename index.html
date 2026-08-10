@@ -16,42 +16,52 @@
       name="description"
       content="Meet elchai pulse — a voice assistant that answers from your company’s own documents."
     />
-    <script
-      id="Cookiebot"
-      src="https://consent.cookiebot.com/uc.js"
-      data-cbid="83fd0dea-6473-4956-a969-72237d97a899"
-      type="text/javascript"
-      async
-    ></script>
-    <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-KW488ZSRYV"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-KW488ZSRYV");
-    </script>
     <script>
       (() => {
         document.documentElement.classList.add("js");
         try {
           const savedTheme = localStorage.getItem("elchai-theme");
           const theme =
-            savedTheme ||
-            (window.matchMedia("(prefers-color-scheme: dark)").matches
-              ? "dark"
-              : "light");
+            savedTheme === "light" || savedTheme === "dark"
+              ? savedTheme
+              : window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light";
           document.documentElement.dataset.theme = theme;
-          document.querySelector('meta[name="theme-color"]').content =
-            theme === "dark" ? "#101116" : "#f2f0ea";
+          document
+            .querySelector('meta[name="theme-color"]')
+            ?.setAttribute("content", theme === "dark" ? "#101116" : "#f2f0ea");
         } catch {
           document.documentElement.dataset.theme = "light";
         }
+      })();
+    </script>
+    <script>
+      (() => {
+        const isLocal = ["localhost", "127.0.0.1", "::1"].includes(
+          window.location.hostname,
+        );
+        if (isLocal) return;
+
+        const cookiebot = document.createElement("script");
+        cookiebot.id = "Cookiebot";
+        cookiebot.src = "https://consent.cookiebot.com/uc.js";
+        cookiebot.dataset.cbid = "83fd0dea-6473-4956-a969-72237d97a899";
+        cookiebot.async = true;
+        document.head.append(cookiebot);
+
+        const googleTag = document.createElement("script");
+        googleTag.async = true;
+        googleTag.src =
+          "https://www.googletagmanager.com/gtag/js?id=G-KW488ZSRYV";
+        document.head.append(googleTag);
+
+        window.dataLayer = window.dataLayer || [];
+        window.gtag = function () {
+          window.dataLayer.push(arguments);
+        };
+        window.gtag("js", new Date());
+        window.gtag("config", "G-KW488ZSRYV");
       })();
     </script>
     <title>elchai pulse — your company’s knowledge, answered out loud</title>

@@ -3,12 +3,14 @@ import { useEffect, useRef, useState } from "react";
 type MotionAwareVideoProps = {
   src: string;
   className?: string;
+  poster?: string;
   preload?: "none" | "metadata" | "auto";
 };
 
 export function MotionAwareVideo({
   src,
   className,
+  poster,
   preload = "metadata",
 }: MotionAwareVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -74,6 +76,7 @@ export function MotionAwareVideo({
       ref={videoRef}
       className={className}
       src={src}
+      poster={poster}
       autoPlay={!prefersReducedMotion}
       loop
       muted

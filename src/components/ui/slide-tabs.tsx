@@ -6,7 +6,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "motion/react";
 
 type TabPosition = {
   left: number;
@@ -15,11 +15,11 @@ type TabPosition = {
 };
 
 const tabs = [
-  { label: "Home", href: "#top" },
-  { label: "Product", href: "#product" },
-  { label: "Content", href: "#demo" },
-  { label: "Resources", href: "#thesis" },
-  { label: "Blog", href: "#briefing" },
+  { label: "Overview", href: "#top" },
+  { label: "Problem", href: "#product" },
+  { label: "Demo", href: "#demo" },
+  { label: "Method", href: "#thesis" },
+  { label: "Contact", href: "#briefing" },
 ] as const;
 
 export function SlideTabs() {
@@ -32,7 +32,14 @@ export function SlideTabs() {
   });
   const tabsRef = useRef<Array<HTMLAnchorElement | null>>([]);
   const pointerInside = useRef(false);
+  const hoverIntentTimer = useRef<number | null>(null);
   const prefersReducedMotion = useReducedMotion();
+
+  const cancelHoverIntent = useCallback(() => {
+    if (hoverIntentTimer.current === null) return;
+    window.clearTimeout(hoverIntentTimer.current);
+    hoverIntentTimer.current = null;
+  }, []);
 
   const measureTab = useCallback((index: number) => {
     const tab = tabsRef.current[index];
@@ -57,6 +64,8 @@ export function SlideTabs() {
     window.addEventListener("resize", handleResize, { passive: true });
     return () => window.removeEventListener("resize", handleResize);
   }, [highlighted, measureTab]);
+
+  useEffect(() => () => cancelHoverIntent(), [cancelHoverIntent]);
 
   useEffect(() => {
     const sections = tabs
@@ -110,11 +119,16 @@ export function SlideTabs() {
   ) => {
     if (event.pointerType === "touch") return;
     pointerInside.current = true;
-    setHighlighted(index);
-    measureTab(index);
+    cancelHoverIntent();
+    hoverIntentTimer.current = window.setTimeout(() => {
+      setHighlighted(index);
+      measureTab(index);
+      hoverIntentTimer.current = null;
+    }, 140);
   };
 
   const resetToSelected = () => {
+    cancelHoverIntent();
     pointerInside.current = false;
     setHighlighted(selected);
     measureTab(selected);
@@ -136,10 +150,12 @@ export function SlideTabs() {
             href={tab.href}
             aria-current={selected === index ? "location" : undefined}
             onClick={() => {
+              cancelHoverIntent();
               setSelected(index);
               setHighlighted(index);
             }}
             onFocus={() => {
+              cancelHoverIntent();
               setHighlighted(index);
               measureTab(index);
             }}
@@ -157,7 +173,7 @@ export function SlideTabs() {
         transition={
           prefersReducedMotion
             ? { duration: 0 }
-            : { duration: 0.2, ease: [0.16, 1, 0.3, 1] }
+            : { duration: 0.22, ease: [0.16, 1, 0.3, 1] }
         }
       />
     </ul>

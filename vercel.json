@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/security", "destination": "/index.html" }
+  ]
+}
