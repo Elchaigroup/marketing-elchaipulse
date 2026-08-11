@@ -34,7 +34,7 @@ export function AnomalousMatterHero({
         href="#top"
         aria-label="Pulse, back to top"
       >
-        <BrandLockup compact />
+        <BrandLockup compact collapsible />
       </a>
 
       <nav className="pulse-nav" aria-label="Primary navigation">

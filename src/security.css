@@ -9,13 +9,85 @@
   border-top: 1px solid var(--line);
 }
 
+.security-hover-field {
+  --security-pointer-x: 50%;
+  --security-pointer-y: 30%;
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.security-hover-field[data-active="true"] {
+  opacity: 1;
+}
+
+.security-hover-field-light,
+.security-hover-field-cipher {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  mask-image: radial-gradient(
+    250px at var(--security-pointer-x) var(--security-pointer-y),
+    #000 0%,
+    rgba(0, 0, 0, 0.94) 28%,
+    rgba(0, 0, 0, 0.58) 52%,
+    transparent 78%
+  );
+  -webkit-mask-image: radial-gradient(
+    250px at var(--security-pointer-x) var(--security-pointer-y),
+    #000 0%,
+    rgba(0, 0, 0, 0.94) 28%,
+    rgba(0, 0, 0, 0.58) 52%,
+    transparent 78%
+  );
+}
+
+.security-hover-field-light {
+  background: radial-gradient(
+    circle at var(--security-pointer-x) var(--security-pointer-y),
+    color-mix(in srgb, var(--teal) 30%, transparent) 0%,
+    color-mix(in srgb, var(--violet) 16%, transparent) 46%,
+    transparent 76%
+  );
+  opacity: 0.72;
+}
+
+.security-hover-field-cipher {
+  overflow: hidden;
+  background: linear-gradient(
+    112deg,
+    color-mix(in srgb, var(--teal) 92%, white 8%),
+    color-mix(in srgb, var(--violet) 88%, white 12%)
+  );
+  background-clip: text;
+  color: transparent;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: clamp(0.5rem, 0.58vw, 0.68rem);
+  font-weight: 650;
+  letter-spacing: 0.035em;
+  line-height: 1.02;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+  opacity: 0.62;
+  text-shadow: 0 0 12px color-mix(in srgb, var(--teal) 24%, transparent);
+  user-select: none;
+}
+
 .pulse-security-lead {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
-  gap: 8vw;
-  min-height: 86vh;
+  gap: clamp(3rem, 7vw, 8rem);
+  min-height: min(52rem, 82svh);
   align-items: center;
-  padding: clamp(6rem, 10vw, 10rem) 3.5vw;
+  width: min(100%, var(--content-wide));
+  margin-inline: auto;
+  padding: var(--section-space) var(--page-gutter);
 }
 
 .pulse-security-copy {
@@ -61,7 +133,7 @@
 .encrypted-text-character {
   position: relative;
   display: inline-block;
-  overflow: hidden;
+  overflow: visible;
   vertical-align: baseline;
 }
 
@@ -74,7 +146,9 @@
   inset: 0;
   display: block;
   width: 100%;
-  overflow: hidden;
+  overflow: visible;
+  line-height: inherit;
+  pointer-events: none;
   text-align: center;
 }
 
@@ -214,9 +288,13 @@
 }
 
 .pulse-security-architecture {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  padding: 0 3.5vw clamp(6rem, 9vw, 9rem);
+  width: min(100%, var(--content-wide));
+  margin-inline: auto;
+  padding: 0 var(--page-gutter) var(--section-space);
 }
 
 .pulse-security-architecture article {
@@ -270,10 +348,16 @@
   }
 }
 
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .security-hover-field {
+    display: none;
+  }
+}
+
 @media (max-width: 920px) {
   .pulse-security-lead {
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: clamp(2.5rem, 6vw, 3.5rem);
     min-height: auto;
     padding-inline: 1.25rem;
   }
@@ -283,8 +367,17 @@
   }
 
   .pulse-security-architecture {
-    grid-template-columns: 1fr;
     padding-inline: 1.25rem;
+  }
+
+  .pulse-security-architecture h3 {
+    margin-top: 2.8rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .pulse-security-architecture {
+    grid-template-columns: 1fr;
   }
 
   .pulse-security-architecture article + article {
@@ -292,8 +385,12 @@
     border-left: 0;
   }
 
+  .pulse-security-architecture article {
+    padding: 1.5rem 0 1.75rem;
+  }
+
   .pulse-security-architecture h3 {
-    margin-top: 2.8rem;
+    margin-top: 1.75rem;
   }
 }
 
@@ -311,7 +408,8 @@
 
 @media (max-width: 520px) {
   .pulse-security-title {
-    min-height: 3.05em;
+    min-height: 2.95em;
+    font-size: clamp(2.5rem, 10.5vw, 3rem);
   }
 
   .security-vault {

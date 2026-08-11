@@ -2,6 +2,35 @@ import { useEffect } from "react";
 
 export function ScrollMotion() {
   useEffect(() => {
+    const root = document.documentElement;
+    let frameId = 0;
+    let collapsed = window.scrollY > 72;
+
+    const updateLogoState = () => {
+      frameId = 0;
+      const nextCollapsed = collapsed ? window.scrollY > 28 : window.scrollY > 72;
+      if (nextCollapsed === collapsed) return;
+
+      collapsed = nextCollapsed;
+      root.classList.toggle("is-logo-collapsed", collapsed);
+    };
+
+    const scheduleLogoUpdate = () => {
+      if (frameId) return;
+      frameId = window.requestAnimationFrame(updateLogoState);
+    };
+
+    root.classList.toggle("is-logo-collapsed", collapsed);
+    window.addEventListener("scroll", scheduleLogoUpdate, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", scheduleLogoUpdate);
+      if (frameId) window.cancelAnimationFrame(frameId);
+      root.classList.remove("is-logo-collapsed");
+    };
+  }, []);
+
+  useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;

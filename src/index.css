@@ -49,6 +49,9 @@
   --demo-surface: var(--demo-bg);
   --display: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
   --body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --page-gutter: clamp(1.25rem, 3.5vw, 4.5rem);
+  --section-space: clamp(4.5rem, 7.5vw, 8rem);
+  --content-wide: 90rem;
   color: var(--ink);
   background: var(--canvas-surface);
   font-family: var(--body);
@@ -331,17 +334,17 @@ a {
   grid-template-columns: minmax(84px, 1fr) auto minmax(84px, 1fr);
   align-items: center;
   gap: 1rem;
-  width: calc(100% - 7vw);
+  width: min(calc(100% - (var(--page-gutter) * 2)), var(--content-wide));
   min-height: 52px;
   margin-inline: auto;
   pointer-events: none;
 }
 
 .pulse-page-brand {
-  position: absolute;
+  position: fixed;
   z-index: 101;
   top: 1rem;
-  left: 3.5vw;
+  left: var(--page-gutter);
   display: inline-flex;
   width: 116px;
   height: 44px;
@@ -459,6 +462,58 @@ a {
   width: 116px;
 }
 
+.pulse-brand-lockup.is-scroll-collapsible {
+  overflow: visible;
+}
+
+.pulse-brand-orb-crop,
+.pulse-brand-word-crop {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+}
+
+.pulse-brand-orb-crop {
+  right: auto;
+  width: 32.1%;
+  border-radius: 50%;
+  transform: translateZ(0);
+}
+
+.pulse-brand-orb-crop .pulse-brand-logo {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 311.5%;
+  max-width: none;
+}
+
+.pulse-brand-word-crop {
+  clip-path: inset(0 0 0 31.6%);
+  transform: translateX(0) scaleX(1);
+  transform-origin: left center;
+  opacity: 1;
+  filter: blur(0);
+  transition:
+    clip-path 520ms cubic-bezier(0.77, 0, 0.175, 1),
+    transform 520ms cubic-bezier(0.77, 0, 0.175, 1),
+    opacity 260ms cubic-bezier(0.23, 1, 0.32, 1),
+    filter 260ms cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: clip-path, transform, opacity;
+}
+
+.is-logo-collapsed .pulse-page-brand .pulse-brand-word-crop {
+  clip-path: inset(0 68.4% 0 31.6%);
+  transform: translateX(-18%) scaleX(0.86);
+  opacity: 0;
+  filter: blur(1.5px);
+  transition:
+    clip-path 600ms cubic-bezier(0.77, 0, 0.175, 1),
+    transform 600ms cubic-bezier(0.77, 0, 0.175, 1),
+    opacity 160ms cubic-bezier(0.4, 0, 1, 1) 400ms,
+    filter 180ms cubic-bezier(0.4, 0, 1, 1) 360ms;
+}
+
 .pulse-brand-logo {
   display: block;
   width: 100%;
@@ -552,8 +607,11 @@ a {
   z-index: 2;
   display: grid;
   grid-template-columns: minmax(0, 0.8fr) minmax(22rem, 1.35fr) minmax(9rem, 0.42fr);
+  column-gap: clamp(1rem, 1.8vw, 2.5rem);
   min-height: 100svh;
-  padding: 7.5rem 3.5vw 2rem;
+  width: min(100%, 108rem);
+  margin-inline: auto;
+  padding: 7.5rem var(--page-gutter) 2rem;
 }
 
 .pulse-hero-copy {
@@ -722,7 +780,7 @@ a {
   z-index: 4;
   align-self: center;
   justify-self: center;
-  width: min(47vw, calc(100svh - 9.5rem), 690px);
+  width: min(100%, 47vw, calc(100svh - 9.5rem), 690px);
   aspect-ratio: 1;
   isolation: isolate;
   animation: orb-arrival 860ms 100ms cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -885,7 +943,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.2rem 3.5vw;
+  padding: 1.2rem var(--page-gutter);
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   color: var(--muted-ink);
@@ -899,9 +957,14 @@ a {
 
 .pulse-intro-body {
   display: grid;
-  grid-template-columns: 1.45fr 0.55fr;
-  gap: 8vw;
-  padding: clamp(6rem, 10vw, 10rem) 3.5vw;
+  grid-template-columns: minmax(18rem, 0.82fr) minmax(31rem, 1.18fr);
+  gap: clamp(3rem, 5vw, 5rem);
+  min-height: clamp(32rem, 68svh, 42rem);
+  width: min(100%, 90rem);
+  margin-inline: auto;
+  padding: clamp(4rem, 5vw, 5.5rem) var(--page-gutter);
+  align-content: center;
+  align-items: center;
 }
 
 .pulse-intro h2,
@@ -922,7 +985,7 @@ a {
 }
 
 .pulse-intro-copy {
-  align-self: end;
+  align-self: center;
   max-width: 29rem;
 }
 
@@ -941,17 +1004,24 @@ a {
 }
 
 .pulse-demonstration {
-  display: grid;
-  grid-template-columns: minmax(300px, 0.72fr) minmax(500px, 1.28fr);
-  gap: 8vw;
-  padding: clamp(5rem, 9vw, 9rem) 3.5vw;
   color: var(--demo-fg);
   background: var(--demo-surface);
+}
+
+.pulse-demonstration-inner {
+  display: grid;
+  grid-template-columns: minmax(18rem, 0.82fr) minmax(31rem, 1.18fr);
+  gap: clamp(3rem, 5vw, 5rem);
+  width: min(100%, 90rem);
+  margin-inline: auto;
+  padding: var(--section-space) var(--page-gutter);
 }
 
 .pulse-demo-copy {
   min-width: 0;
   align-self: center;
+  justify-self: start;
+  width: min(100%, 40rem);
 }
 
 .pulse-section-heading {
@@ -991,6 +1061,8 @@ a {
   position: relative;
   min-width: 0;
   align-self: center;
+  justify-self: start;
+  width: min(100%, 58rem);
   isolation: isolate;
   overflow: hidden;
   padding: clamp(2rem, 4vw, 4rem);
@@ -1142,7 +1214,7 @@ a {
   grid-area: content;
   min-width: 0;
   align-self: center;
-  padding: clamp(6rem, 9vw, 9rem) clamp(2rem, 6vw, 7rem);
+  padding: var(--section-space) clamp(2rem, 6vw, 7rem);
 }
 
 .pulse-thesis h2 {
@@ -1644,6 +1716,7 @@ a {
 @media (max-width: 1100px) {
   .pulse-hero-grid {
     grid-template-columns: minmax(260px, 0.8fr) minmax(430px, 1.2fr);
+    column-gap: clamp(1.5rem, 3vw, 3rem);
   }
 
   .pulse-hero-note {
@@ -1651,10 +1724,10 @@ a {
   }
 
   .pulse-orb-stage {
-    width: min(55vw, calc(100svh - 8.5rem), 620px);
+    width: min(100%, 55vw, calc(100svh - 8.5rem), 620px);
   }
 
-  .pulse-demonstration {
+  .pulse-demonstration-inner {
     gap: 5vw;
   }
 
@@ -1709,7 +1782,7 @@ a {
   }
 
   .pulse-intro-body,
-  .pulse-demonstration {
+  .pulse-demonstration-inner {
     padding-top: clamp(4.5rem, 7vw, 6.5rem);
     padding-bottom: clamp(4.5rem, 7vw, 6.5rem);
   }
@@ -1792,8 +1865,12 @@ a {
   }
 
   .pulse-intro-body,
-  .pulse-demonstration {
+  .pulse-demonstration-inner {
     grid-template-columns: 1fr;
+  }
+
+  .pulse-intro-body {
+    min-height: auto;
   }
 
   .pulse-thesis {
@@ -1808,12 +1885,16 @@ a {
   }
 
   .pulse-intro-body,
-  .pulse-demonstration {
+  .pulse-demonstration-inner {
     padding-inline: 1.25rem;
   }
 
   .pulse-intro-body {
     gap: 3rem;
+  }
+
+  .pulse-intro-copy {
+    max-width: 40rem;
   }
 
   .pulse-intro h2,
@@ -1823,8 +1904,12 @@ a {
     max-width: 100%;
   }
 
-  .pulse-demonstration {
+  .pulse-demonstration-inner {
     gap: 4rem;
+  }
+
+  .pulse-demo-copy {
+    justify-self: start;
   }
 
   .pulse-section-heading {
@@ -1840,22 +1925,7 @@ a {
   }
 
   .pulse-thesis-content {
-    padding: 5rem 1.25rem;
-  }
-
-  .pulse-thesis-methods {
-    grid-template-columns: 1fr;
-  }
-
-  .pulse-thesis-methods article {
-    padding: 2rem 0 2.2rem;
-  }
-
-  .pulse-thesis-methods article + article {
-    padding-right: 0;
-    padding-left: 0;
-    border-top: 1px solid var(--line);
-    border-left: 0;
+    padding: var(--section-space) 1.25rem;
   }
 
   .pulse-thesis-result {
@@ -1864,7 +1934,7 @@ a {
   }
 
   .pulse-thesis-visual {
-    min-height: min(760px, 90svh);
+    min-height: min(620px, 72svh);
     border-top: 1px solid var(--line);
     border-right: 0;
   }
@@ -1925,15 +1995,15 @@ a {
 
 @media (max-width: 520px) {
   .pulse-thesis-visual {
-    min-height: 620px;
+    min-height: 520px;
   }
 
   .pulse-fusion-diagram {
-    width: min(96vw, 470px);
+    width: min(88vw, 420px);
   }
 
   .pulse-fusion-node {
-    width: 132px;
+    width: 120px;
     padding-inline: 0.65rem;
   }
 
@@ -1961,6 +2031,10 @@ a {
     display: inline-flex;
   }
 
+  .pulse-hero-grid {
+    padding-top: 8.5rem;
+  }
+
   .pulse-slide-tabs {
     width: max-content;
   }
@@ -1975,6 +2049,19 @@ a {
   }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .pulse-brand-word-crop {
+    transition: opacity 120ms ease-out;
+  }
+
+  .is-logo-collapsed .pulse-page-brand .pulse-brand-word-crop {
+    clip-path: inset(0 68.4% 0 31.6%);
+    transform: none;
+    filter: none;
+    transition: opacity 120ms ease-out;
+  }
+}
+
 @media (max-width: 640px) {
   .pulse-tab-label-full {
     display: none;
@@ -1983,6 +2070,22 @@ a {
   .pulse-tab-label-compact {
     display: inline;
   }
+
+  .pulse-thesis-methods {
+    grid-template-columns: 1fr;
+  }
+
+  .pulse-thesis-methods article {
+    padding: 1.75rem 0 2rem;
+  }
+
+  .pulse-thesis-methods article + article {
+    padding-right: 0;
+    padding-left: 0;
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
 }
 
 @media (max-width: 520px) {
@@ -2037,12 +2140,19 @@ a {
     letter-spacing: -0.035em;
   }
 
+  .pulse-intro h2,
+  .pulse-demo-copy h2,
+  .pulse-thesis h2 {
+    font-size: clamp(2.5rem, 10.5vw, 3rem);
+    line-height: 1;
+  }
+
   .pulse-hero-description {
     max-width: 20rem;
   }
 
   .pulse-orb-stage {
-    width: min(90vw, 400px);
+    width: min(88vw, 390px);
     margin: 0.5rem 0 -1.25rem;
   }
 
