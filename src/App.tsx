@@ -36,9 +36,6 @@ function App() {
 
   return (
     <main ref={siteRef}>
-      <a className="pulse-skip-link" href="#product">
-        Skip to main content
-      </a>
       <ScrollMotion />
       <SiteMotion scope={siteRef} />
       <AnomalousMatterHero

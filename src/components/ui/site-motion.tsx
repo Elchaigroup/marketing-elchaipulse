@@ -55,6 +55,11 @@ export function SiteMotion({ scope }: SiteMotionProps) {
           );
         }
 
+        heroTimeline.set(
+          [...heroItems, orb, heroNote].filter(Boolean) as HTMLElement[],
+          { clearProps: "transform,opacity,visibility" },
+        );
+
         const voiceCard = root.querySelector<HTMLElement>(
           "[data-motion='voice-card']",
         );
@@ -117,7 +122,13 @@ export function SiteMotion({ scope }: SiteMotionProps) {
             )
             .set(bars, {
               clearProps: "transform,opacity,visibility,animationPlayState",
-            });
+            })
+            .set(
+              [voiceCard, listeningState, ...transcriptRows].filter(
+                Boolean,
+              ) as HTMLElement[],
+              { clearProps: "transform,opacity,visibility" },
+            );
         }
 
         const thesis = root.querySelector<HTMLElement>(".pulse-thesis");
@@ -190,6 +201,13 @@ export function SiteMotion({ scope }: SiteMotionProps) {
               0.52,
             );
           }
+
+          thesisTimeline.set(
+            [...contentItems, ...inputNodes, fusionCore, outputNode].filter(
+              Boolean,
+            ) as HTMLElement[],
+            { clearProps: "transform,opacity,visibility" },
+          );
         }
 
         const securityStory = root.querySelector<HTMLElement>(
@@ -243,6 +261,13 @@ export function SiteMotion({ scope }: SiteMotionProps) {
               stagger: 0.055,
             },
             0.28,
+          );
+
+          securityTimeline.set(
+            [...supportingCopy, vault, ...principles].filter(
+              Boolean,
+            ) as HTMLElement[],
+            { clearProps: "transform,opacity,visibility" },
           );
         }
       });
