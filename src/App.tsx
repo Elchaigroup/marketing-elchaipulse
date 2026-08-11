@@ -1,9 +1,9 @@
 import {
   ArrowDown,
   ArrowUpRight,
-  Hash,
-  ListOrdered,
-  ScanSearch,
+  BookOpenText,
+  MessageSquareText,
+  UserCheck,
   Waypoints,
   Waves,
 } from "lucide-react";
@@ -48,22 +48,22 @@ function App() {
 
       <section id="product" className="pulse-intro" aria-labelledby="product-title">
         <div className="pulse-section-rail">
-          <span>The problem</span>
+          <span>Why Pulse</span>
           <ArrowDown size={15} strokeWidth={1.7} aria-hidden="true" />
         </div>
         <div className="pulse-intro-body">
           <h2 id="product-title" data-reveal="headline">
-            Your team already wrote the answer down.
+            The answer exists. Finding it is the bottleneck.
           </h2>
           <div className="pulse-intro-copy" data-reveal="copy">
             <p>
-              Onboarding guides, process notes, contracts, and meeting summaries—most
-              firms already have the information. What they lack is a fast way to
-              retrieve it.
+              Important context is scattered across documents, meetings, inboxes,
+              and spreadsheets. Teams lose time searching, repeating questions,
+              and waiting for the one person who remembers.
             </p>
             <p className="pulse-muted">
-              File search finds filenames, not answers. Pulse answers from the
-              documents your team already maintains.
+              Pulse brings the right context forward quickly, so decisions keep
+              moving without a search chain or knowledge bottleneck.
             </p>
           </div>
         </div>
@@ -75,20 +75,21 @@ function App() {
             <span className="pulse-symbol" aria-hidden="true">
               <Waves size={18} strokeWidth={1.7} />
             </span>
-            <p>How a turn works</p>
+            <p>Pulse in action</p>
           </div>
           <h2 id="demo-title" data-reveal="headline">
-            Press space. Ask. Listen.
+            Ask once. Move faster.
           </h2>
           <p data-reveal="copy">
-            Speak or type. Pulse transcribes the question, retrieves the passages
-            that bear on it, and streams back a spoken answer.
+            Ask Pulse by voice or text. It moves across your company’s knowledge,
+            finds what matters, and responds in moments with the context your team
+            needs to act.
           </p>
         </div>
 
         <div
           className="pulse-voice-object"
-          aria-label="Example Pulse document conversation"
+          aria-label="Synthetic Pulse workspace conversation"
           data-motion="voice-card"
         >
           <div className="pulse-listening-state">
@@ -111,11 +112,14 @@ function App() {
           <div className="pulse-transcript">
             <div>
               <span>You</span>
-              <p>“What’s the notice period in the Rossi contract?”</p>
+              <p>“What did we agree about the renewal timeline?”</p>
             </div>
             <div className="pulse-response">
               <span>Pulse</span>
-              <p>“I found the relevant section. Here’s what the contract says.”</p>
+              <p>
+                “The meeting record says the renewal stays annual, with pricing
+                reviewed in October.”
+              </p>
             </div>
           </div>
           <p className="pulse-synthetic-note">
@@ -126,39 +130,43 @@ function App() {
 
       <section id="thesis" className="pulse-thesis" aria-labelledby="thesis-title">
         <div className="pulse-thesis-content">
-          <p className="pulse-kicker">Why answers hold up</p>
-          <h2 id="thesis-title">Two kinds of search, fused for precision.</h2>
+          <p className="pulse-kicker">Control by design</p>
+          <h2 id="thesis-title">Pulse proposes. You decide.</h2>
           <p className="pulse-thesis-summary">
-            Pulse runs meaning-based and exact-term retrieval in parallel, then
-            combines both rankings before an answer is formed.
+            Pulse accelerates work without taking decisions away from people. It
+            prepares proposed updates and holds every action for review.
           </p>
 
           <div className="pulse-thesis-methods">
             <article>
-              <span>Semantic search</span>
-              <h3>Meaning, even when the wording differs.</h3>
+              <span>Human approval</span>
+              <h3>Every proposal arrives ready for review.</h3>
               <p>
-                Finds passages that express the same idea as your question without
-                requiring the same phrasing.
+                Pulse turns new context into a clear suggested update, ready for a
+                person to approve, refine, or dismiss.
               </p>
             </article>
             <article>
-              <span>BM25 keyword search</span>
-              <h3>Exact terms, names, codes, and references.</h3>
+              <span>Operational control</span>
+              <h3>Decision authority stays with your team.</h3>
               <p>
-                Catches the precise language that semantic similarity can miss.
+                Messages, calendar changes, and company records remain under human
+                control from beginning to end.
               </p>
             </article>
           </div>
 
           <div className="pulse-thesis-result">
-            <span>Reciprocal rank fusion</span>
-            <p>Both result lists become one ranked set of relevant passages.</p>
+            <span>Trust by design</span>
+            <p>
+              Faster execution, clear accountability, and no ambiguity about who
+              makes the final call.
+            </p>
           </div>
         </div>
 
         <div className="pulse-thesis-visual" aria-hidden="true">
-          <p className="pulse-fusion-index">RETRIEVAL / FUSION / 002</p>
+          <p className="pulse-fusion-index">CONTEXT / PROPOSAL / 002</p>
           <div className="pulse-fusion-diagram">
             <svg viewBox="0 0 520 600" preserveAspectRatio="xMidYMid meet">
               <path
@@ -191,71 +199,25 @@ function App() {
             </svg>
 
             <div className="pulse-fusion-node pulse-fusion-node-semantic">
-              <ScanSearch size={20} strokeWidth={1.45} />
-              <span>Meaning</span>
+              <BookOpenText size={20} strokeWidth={1.45} />
+              <span>Context</span>
             </div>
             <div className="pulse-fusion-node pulse-fusion-node-keyword">
-              <Hash size={20} strokeWidth={1.45} />
-              <span>Exact terms</span>
+              <MessageSquareText size={20} strokeWidth={1.45} />
+              <span>New record</span>
             </div>
             <div className="pulse-fusion-core">
               <Waypoints size={32} strokeWidth={1.25} />
-              <span>Fusion</span>
+              <span>Proposal</span>
             </div>
             <div className="pulse-fusion-node pulse-fusion-node-output">
-              <ListOrdered size={20} strokeWidth={1.45} />
-              <span>Ranked passages</span>
+              <UserCheck size={20} strokeWidth={1.45} />
+              <span>Your decision</span>
             </div>
           </div>
           <p className="pulse-fusion-caption">
-            Two retrieval signals. One evidence set.
+            Pulse prepares the update. You choose what happens.
           </p>
-        </div>
-      </section>
-
-      <section
-        id="foundations"
-        className="pulse-principles"
-        aria-labelledby="principles-title"
-      >
-        <div className="pulse-principles-heading" data-reveal="copy">
-          <h2 id="principles-title">What Pulse is built around</h2>
-          <p>A practical foundation for document-grounded answers.</p>
-        </div>
-        <div className="pulse-principles-list">
-          <article
-            data-reveal="row"
-            style={{ "--reveal-delay": "0ms" } as React.CSSProperties}
-          >
-            <span>Your existing files</span>
-            <h3>Point Pulse at what you have.</h3>
-            <p>
-              It reads PDF, Word, Excel, Markdown, and plain text, with vision-based
-              OCR for scanned PDFs.
-            </p>
-          </article>
-          <article
-            data-reveal="row"
-            style={{ "--reveal-delay": "50ms" } as React.CSSProperties}
-          >
-            <span>Local embeddings</span>
-            <h3>Keep the vector index on your infrastructure.</h3>
-            <p>
-              Indexing and querying do not require an embeddings API, and document
-              text is not sent to an embeddings vendor.
-            </p>
-          </article>
-          <article
-            data-reveal="row"
-            style={{ "--reveal-delay": "100ms" } as React.CSSProperties}
-          >
-            <span>Conversation memory</span>
-            <h3>Ask a follow-up without starting over.</h3>
-            <p>
-              Pulse carries context within a conversation and can recall relevant
-              exchanges from earlier conversations.
-            </p>
-          </article>
         </div>
       </section>
 
@@ -277,9 +239,9 @@ function App() {
           </p>
           <a
             className="pulse-closing-action focus-ring"
-            href="mailto:pulse@elchaigroup.com?subject=Elchai%20Pulse%20walkthrough"
+            href="mailto:pulse@elchaigroup.com?subject=Elchai%20Pulse%20demo"
           >
-            Book a walkthrough
+            Contact for demo
             <ArrowUpRight size={20} strokeWidth={1.7} aria-hidden="true" />
           </a>
         </div>
@@ -291,42 +253,21 @@ function App() {
             <a
               className="pulse-wordmark focus-ring"
               href="#top"
-              aria-label="Elchai Pulse — back to top"
+              aria-label="Elchai Pulse, back to top"
             >
               <BrandLockup compact surface="dark" />
             </a>
             <p>
-              Elchai Pulse is a document-grounded voice assistant for teams.
-              Speak or type a question; Pulse searches your organisation’s own
-              files, retrieves the passages that bear on it, and answers out
-              loud. It reads PDF, Word, Excel, Markdown and plain text, including
-              scanned PDFs via vision-based OCR.
+              Pulse turns company knowledge into fast, trusted answers by voice or
+              text. It helps teams move from scattered information to confident
+              decisions.
             </p>
           </div>
 
-          <nav className="pulse-footer-nav" aria-label="Footer navigation">
-            <p className="pulse-footer-label">Explore</p>
-            <ul>
-              <li>
-                <a className="focus-ring" href="#top">Overview</a>
-              </li>
-              <li>
-                <a className="focus-ring" href="#product">Problem</a>
-              </li>
-              <li>
-                <a className="focus-ring" href="#demo">Demo</a>
-              </li>
-              <li>
-                <a className="focus-ring" href="#thesis">Method</a>
-              </li>
-              <li>
-                <a className="focus-ring" href="#briefing">Contact</a>
-              </li>
-              <li>
-                <a className="focus-ring" href="#security">Security</a>
-              </li>
-            </ul>
-          </nav>
+          <div className="pulse-footer-location">
+            <p className="pulse-footer-label">Location</p>
+            <p>Dubai, United Arab Emirates</p>
+          </div>
 
           <div className="pulse-footer-contact">
             <p className="pulse-footer-label">Contact</p>
@@ -336,7 +277,7 @@ function App() {
             >
               pulse@elchaigroup.com
             </a>
-            <p>Questions about Pulse? Write to the product team.</p>
+            <p>Want to see Pulse work with your own documents? Contact the team.</p>
           </div>
         </div>
 

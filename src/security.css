@@ -38,19 +38,57 @@
   min-height: 2.05em;
   margin: 0;
   font-family: var(--display);
-  font-size: clamp(3.2rem, 6.8vw, 6rem);
+  font-size: clamp(3.2rem, 5.2vw, 6rem);
   font-weight: 440;
   letter-spacing: -0.04em;
   line-height: 0.98;
   text-wrap: balance;
 }
 
+.encrypted-text {
+  display: inline;
+}
+
+.encrypted-text-display {
+  display: inline;
+}
+
+.encrypted-text-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.encrypted-text-character {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: baseline;
+}
+
+.encrypted-text-measure {
+  visibility: hidden;
+}
+
+.encrypted-text-glyph {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+}
+
 .security-character-encrypted {
   color: color-mix(in srgb, var(--teal-dark) 52%, var(--muted-ink));
+  opacity: 0.72;
 }
 
 .security-character-revealed {
   color: var(--ink);
+  opacity: 1;
+  transition:
+    color 160ms cubic-bezier(0.23, 1, 0.32, 1),
+    opacity 160ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .pulse-security-summary,
@@ -256,6 +294,18 @@
 
   .pulse-security-architecture h3 {
     margin-top: 2.8rem;
+  }
+}
+
+@media (min-width: 921px) and (max-height: 820px) {
+  .pulse-security-lead {
+    min-height: auto;
+    padding-top: clamp(4.5rem, 7vw, 6.5rem);
+    padding-bottom: clamp(4.5rem, 7vw, 6.5rem);
+  }
+
+  .pulse-security-architecture {
+    padding-bottom: clamp(4.5rem, 7vw, 6.5rem);
   }
 }
 

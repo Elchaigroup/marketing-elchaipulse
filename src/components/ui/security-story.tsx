@@ -1,27 +1,27 @@
-import { Fingerprint, Network, ScanSearch, Server } from "lucide-react";
+import { Fingerprint, Network, ShieldCheck, UserRoundCheck } from "lucide-react";
 import { EncryptedText } from "./encrypted-text";
 
 const privacyPrinciples = [
   {
-    label: "Hosted environment",
-    title: "Your files stay on the assigned server.",
+    label: "Data isolation",
+    title: "A private environment for every company.",
     description:
-      "The document library and retrieval index are stored in the VPS or server environment assigned to your organisation—not in a shared consumer chat workspace.",
-    Icon: Server,
+      "Your workspace, credentials, and company memory are separated from every other Pulse deployment.",
+    Icon: ShieldCheck,
   },
   {
-    label: "Local retrieval index",
-    title: "Embeddings can remain on your infrastructure.",
+    label: "Access control",
+    title: "Only approved users get access.",
     description:
-      "Indexing and querying do not require an embeddings API, and document text is not sent to an embeddings vendor for those steps.",
+      "Access uses Google or Microsoft accounts from an approved list your company controls.",
+    Icon: UserRoundCheck,
+  },
+  {
+    label: "Protected company data",
+    title: "Your company knowledge is never pooled.",
+    description:
+      "Your data is not combined with another company’s workspace or used as shared company memory.",
     Icon: Fingerprint,
-  },
-  {
-    label: "Grounded retrieval",
-    title: "Answers begin with relevant source passages.",
-    description:
-      "Semantic and exact-keyword search locate the passages that bear on a question before Pulse produces an answer.",
-    Icon: ScanSearch,
   },
 ] as const;
 
@@ -35,25 +35,23 @@ export function SecurityStory() {
     >
       <div className="pulse-security-lead">
         <div className="pulse-security-copy">
-          <p className="security-eyebrow">Security / Data privacy</p>
+          <p className="security-eyebrow">Security / Privacy / Data protection</p>
           <h2 id="security-title" className="pulse-security-title">
             <EncryptedText
-              text="Your knowledge stays inside your deployment."
+              text="Your company knowledge stays protected."
               revealDelayMs={32}
-              flipDelayMs={52}
               encryptedClassName="security-character-encrypted"
               revealedClassName="security-character-revealed"
             />
           </h2>
           <p className="pulse-security-summary">
-            Pulse is deployed within a dedicated VPS or server environment
-            assigned to your organisation. Your documents and retrieval index
-            remain inside that environment rather than being stored in a shared
-            consumer assistant workspace.
+            Pulse runs in an isolated company environment designed to keep each
+            organisation’s documents, conversations, and memory separated from
+            every other workspace.
           </p>
           <p className="pulse-security-boundary-note">
-            Where connected model services are used, those processing boundaries
-            are reviewed and documented as part of the deployment architecture.
+            Access is restricted to approved users through your company’s Google or
+            Microsoft sign in.
           </p>
         </div>
 
@@ -63,13 +61,13 @@ export function SecurityStory() {
           <div className="security-vault-core">
             <Network size={54} strokeWidth={1.05} />
           </div>
-          <span>FILES</span>
-          <span>INDEX</span>
-          <span>ANSWER</span>
+          <span>DATA</span>
+          <span>ACCESS</span>
+          <span>ISOLATION</span>
         </div>
       </div>
 
-      <div className="pulse-security-architecture" aria-label="Data privacy principles">
+      <div className="pulse-security-architecture" aria-label="Pulse privacy principles">
         {privacyPrinciples.map(({ label, title, description, Icon }) => (
           <article key={label}>
             <div className="pulse-security-card-index">

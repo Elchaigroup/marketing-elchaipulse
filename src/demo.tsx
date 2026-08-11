@@ -4,7 +4,7 @@ export default function Demo() {
   return (
     <AnomalousMatterHero
       subtitle="Your company’s knowledge, answered out loud."
-      description="A voice assistant that answers in plain language from your own documents."
+      description="Pulse turns scattered company knowledge into clear answers in moments by voice or text, so teams move faster without losing control."
       orbVideoSrc="/media/pulse-orb.mp4"
     />
   );

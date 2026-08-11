@@ -12,7 +12,22 @@ type EncryptedTextProps = {
   revealedClassName?: string;
 };
 
-const DEFAULT_CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%+/<>{}[]";
+type TextToken = {
+  value: string;
+  start: number;
+  whitespace: boolean;
+};
+
+type AnimationFrame = {
+  display: string;
+  revealCount: number;
+};
+
+const DEFAULT_CHARSET = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789";
+
+function isEncryptable(character: string) {
+  return /[\p{L}\p{N}]/u.test(character);
+}
 
 function randomCharacter(charset: string) {
   return charset.charAt(Math.floor(Math.random() * charset.length));
@@ -22,10 +37,25 @@ function scramble(text: string, charset: string, revealCount: number) {
   return text
     .split("")
     .map((character, index) => {
-      if (index < revealCount || character === " ") return character;
+      if (index < revealCount || !isEncryptable(character)) return character;
       return randomCharacter(charset);
     })
     .join("");
+}
+
+function tokenize(text: string): TextToken[] {
+  let start = 0;
+
+  return text.split(/(\s+)/).filter(Boolean).map((value) => {
+    const token = {
+      value,
+      start,
+      whitespace: /^\s+$/.test(value),
+    };
+
+    start += value.length;
+    return token;
+  });
 }
 
 export function EncryptedText({
@@ -40,10 +70,11 @@ export function EncryptedText({
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-8% 0px" });
   const reduceMotion = useReducedMotion();
-  const [frame, setFrame] = useState(() => ({
-    display: scramble(text, charset, 0),
-    revealCount: 0,
-  }));
+  const [frame, setFrame] = useState<AnimationFrame>(() =>
+    reduceMotion
+      ? { display: text, revealCount: text.length }
+      : { display: scramble(text, charset, 0), revealCount: 0 },
+  );
 
   useEffect(() => {
     if (!isInView) return;
@@ -93,20 +124,41 @@ export function EncryptedText({
   if (!text) return null;
 
   return (
-    <span ref={ref} className={cn(className)} aria-label={text}>
-      <span aria-hidden="true">
-        {frame.display.split("").map((character, index) => (
-          <span
-            key={`${index}-${text[index]}`}
-            className={cn(
-              index < frame.revealCount
-                ? revealedClassName
-                : encryptedClassName,
-            )}
-          >
-            {character}
-          </span>
-        ))}
+    <span
+      ref={ref}
+      className={cn("encrypted-text", className)}
+      aria-label={text}
+    >
+      <span className="encrypted-text-display" aria-hidden="true">
+        {tokenize(text).map(({ value, start, whitespace }, tokenIndex) =>
+          whitespace ? (
+            <span key={`space-${tokenIndex}`}>{value}</span>
+          ) : (
+            <span className="encrypted-text-word" key={`${value}-${tokenIndex}`}>
+              {value.split("").map((character, characterIndex) => {
+                const absoluteIndex = start + characterIndex;
+                const revealed = absoluteIndex < frame.revealCount;
+
+                return (
+                  <span
+                    className="encrypted-text-character"
+                    key={`${character}-${characterIndex}`}
+                  >
+                    <span className="encrypted-text-measure">{character}</span>
+                    <span
+                      className={cn(
+                        "encrypted-text-glyph",
+                        revealed ? revealedClassName : encryptedClassName,
+                      )}
+                    >
+                      {frame.display[absoluteIndex] ?? character}
+                    </span>
+                  </span>
+                );
+              })}
+            </span>
+          ),
+        )}
       </span>
     </span>
   );

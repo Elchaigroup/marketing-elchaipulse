@@ -23,7 +23,7 @@ type AnomalousMatterHeroProps = {
 
 export function AnomalousMatterHero({
   subtitle = "Your company’s knowledge, answered out loud.",
-  description = "Ask by voice or text. Pulse retrieves the passages that bear on your question from your own documents, then answers in plain language.",
+  description = "Pulse turns scattered company knowledge into clear answers in moments by voice or text, so teams move faster without losing control.",
   orbVideoSrc,
   orbPosterSrc,
 }: AnomalousMatterHeroProps) {
@@ -32,7 +32,7 @@ export function AnomalousMatterHero({
       <a
         className="pulse-page-brand pulse-wordmark focus-ring"
         href="#top"
-        aria-label="Pulse — back to top"
+        aria-label="Pulse, back to top"
       >
         <BrandLockup compact />
       </a>
@@ -68,7 +68,7 @@ export function AnomalousMatterHero({
           </div>
         </div>
 
-        <div className="pulse-orb-stage" aria-label="Elchai Pulse voice assistant">
+        <div className="pulse-orb-stage" aria-label="Elchai Pulse AI chief of staff">
           <div className="pulse-orbit pulse-orbit-outer" aria-hidden="true" />
           <div className="pulse-orbit pulse-orbit-inner" aria-hidden="true" />
           <span
@@ -81,7 +81,7 @@ export function AnomalousMatterHero({
             className="pulse-specimen-label pulse-specimen-label-bottom"
             aria-hidden="true"
           >
-            DOCUMENTS · RETRIEVAL · VOICE
+            CONTEXT · MEMORY · VOICE
           </span>
           <div className="pulse-video-shell">
             <Suspense fallback={<div className="pulse-orb-fallback" />}>
@@ -102,9 +102,9 @@ export function AnomalousMatterHero({
         <div className="pulse-hero-note">
           <span className="pulse-note-dot" aria-hidden="true" />
           <p>
-            Press space. Ask. Listen.
+            Ask by voice or text.
             <br />
-            Answers drawn from your files.
+            Answers in moments.
           </p>
         </div>
       </div>

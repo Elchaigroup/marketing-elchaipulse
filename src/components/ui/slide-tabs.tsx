@@ -15,11 +15,11 @@ type TabPosition = {
 };
 
 const tabs = [
-  { label: "Overview", href: "#top" },
-  { label: "Problem", href: "#product" },
-  { label: "Demo", href: "#demo" },
-  { label: "Method", href: "#thesis" },
-  { label: "Contact", href: "#briefing" },
+  { label: "Overview", compactLabel: "Home", href: "#top" },
+  { label: "Why Pulse", compactLabel: "Why", href: "#product" },
+  { label: "Product", compactLabel: "Product", href: "#demo" },
+  { label: "How It Works", compactLabel: "How", href: "#thesis" },
+  { label: "Contact", compactLabel: "Contact", href: "#briefing" },
 ] as const;
 
 export function SlideTabs() {
@@ -148,6 +148,7 @@ export function SlideTabs() {
               highlighted === index ? " is-highlighted" : ""
             }`}
             href={tab.href}
+            aria-label={tab.label}
             aria-current={selected === index ? "location" : undefined}
             onClick={() => {
               cancelHoverIntent();
@@ -161,7 +162,10 @@ export function SlideTabs() {
             }}
             onPointerEnter={(event) => previewTab(index, event)}
           >
-            {tab.label}
+            <span className="pulse-tab-label-full">{tab.label}</span>
+            <span className="pulse-tab-label-compact" aria-hidden="true">
+              {tab.compactLabel}
+            </span>
           </a>
         </li>
       ))}
