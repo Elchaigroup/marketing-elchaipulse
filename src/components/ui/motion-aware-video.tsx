@@ -83,6 +83,12 @@ export function MotionAwareVideo({
       playsInline
       preload={preload}
       aria-hidden="true"
+      /* The orb is decorative, not a media player: suppress the native video
+         context menu and the download / Picture-in-Picture / Cast affordances. */
+      onContextMenu={(event) => event.preventDefault()}
+      controlsList="nodownload noplaybackrate noremoteplayback"
+      disablePictureInPicture
+      disableRemotePlayback
     />
   );
 }
