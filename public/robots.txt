@@ -1,0 +1,84 @@
+# elchai pulse — crawler policy
+#
+# Policy: allow crawlers that CITE sources in answers (so Pulse can appear in
+# AI results), disallow crawlers whose sole purpose is harvesting content to
+# TRAIN models.
+
+# ---------------------------------------------------------------------------
+# Search engines — full access
+# ---------------------------------------------------------------------------
+User-agent: *
+Allow: /
+
+# ---------------------------------------------------------------------------
+# AI assistants that retrieve and cite pages — allowed
+# ---------------------------------------------------------------------------
+
+# OpenAI: ChatGPT search index and user-initiated page fetches
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic: Claude search and user-initiated page fetches
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# Google Gemini grounding (also governs Gemini/Vertex training).
+# Allowed because blocking it removes Pulse from Gemini answers.
+# Note: this does NOT control Google Search or AI Overviews — those use
+# Googlebot, covered by the wildcard rule above.
+User-agent: Google-Extended
+Allow: /
+
+# Apple: Siri and Spotlight surfacing
+User-agent: Applebot
+Allow: /
+
+# Microsoft Copilot / Bing chat
+User-agent: bingbot
+Allow: /
+
+# ---------------------------------------------------------------------------
+# Training-only crawlers — disallowed
+# ---------------------------------------------------------------------------
+
+# OpenAI model training
+User-agent: GPTBot
+Disallow: /
+
+# Common Crawl — bulk dataset used to train many models
+User-agent: CCBot
+Disallow: /
+
+# ByteDance model training
+User-agent: Bytespider
+Disallow: /
+
+# Meta model training
+User-agent: meta-externalagent
+Disallow: /
+
+# Apple model training (distinct from Applebot above, which is allowed)
+User-agent: Applebot-Extended
+Disallow: /
+
+# Amazon model training
+User-agent: Amazonbot
+Disallow: /
+
+Sitemap: https://www.elchaipulse.com/sitemap.xml
