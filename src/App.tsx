@@ -49,19 +49,23 @@ function App() {
           <ArrowDown size={15} strokeWidth={1.7} aria-hidden="true" />
         </div>
         <div className="pulse-intro-body">
-          <h2 id="product-title" data-reveal="headline">
-            The answer exists. Finding it is the bottleneck.
-          </h2>
-          <div className="pulse-intro-copy" data-reveal="copy">
-            <p>
-              Important context is scattered across documents, meetings, inboxes,
-              and spreadsheets. Teams lose time searching, repeating questions,
-              and waiting for the one person who remembers.
-            </p>
-            <p className="pulse-muted">
-              Pulse brings the right context forward quickly, so decisions keep
-              moving without a search chain or knowledge bottleneck.
-            </p>
+          <div className="pulse-intro-content">
+            <h2 id="product-title" data-reveal="headline">
+              The answer exists. Finding it is the bottleneck.
+            </h2>
+          </div>
+          <div className="pulse-intro-content">
+            <div className="pulse-intro-copy" data-reveal="copy">
+              <p>
+                Important context is scattered across documents, meetings, inboxes,
+                and spreadsheets. Teams lose time searching, repeating questions,
+                and waiting for the one person who remembers.
+              </p>
+              <p className="pulse-muted">
+                Pulse brings the right context forward quickly, so decisions keep
+                moving without a search chain or knowledge bottleneck.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -155,12 +159,14 @@ function App() {
             </article>
           </div>
 
-          <div className="pulse-thesis-result">
-            <span>Trust by design</span>
-            <p>
-              Faster execution, clear accountability, and no ambiguity about who
-              makes the final call.
-            </p>
+          <div className="pulse-thesis-details">
+            <div className="pulse-thesis-result">
+              <span>Trust by design</span>
+              <p>
+                Faster execution, clear accountability, and no ambiguity about who
+                makes the final call.
+              </p>
+            </div>
           </div>
         </div>
 
@@ -234,7 +240,7 @@ function App() {
           <h2 id="closing-title">See it answer a question about your own documents.</h2>
           <p>
             Point Pulse at a folder of your material and ask something only your
-            team would know. That’s the walkthrough.
+            team would know. That's the walkthrough.
           </p>
           <a
             className="pulse-closing-action focus-ring"

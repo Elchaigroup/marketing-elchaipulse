@@ -44,9 +44,23 @@
   --closing-bg: #6d56a8;
   --footer-bg: #17141e;
   --focus-contrast: rgba(255, 255, 255, 0.92);
+
+  /* Semantic typography tokens (supporting/body text hierarchy) */
+  --text-on-dark: #f8f6f0;
+  --text-on-dark-muted: rgba(248, 246, 240, 0.72);
+  --text-closing-muted: #e6e0f0;
   --canvas-surface: var(--porcelain);
   --paper-surface: var(--paper);
   --demo-surface: var(--demo-bg);
+
+  /* White surface for the thesis + security sections (light only). */
+  --section-surface: #ffffff;
+
+  /* Geometry mirrored from .pulse-demonstration-inner / .pulse-voice-object,
+     so intro copy can align to the demo card without hardcoded offsets. */
+  --demo-gap: clamp(2rem, 5vw, 6rem);
+  --demo-object-fraction: 0.64; /* 1.28fr of the 2fr track */
+  --demo-object-max: 58rem;
   --display: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
   --body: "Helvetica Neue", Helvetica, Arial, sans-serif;
   --display-tracking: -0.02em;
@@ -122,6 +136,9 @@
       transparent 66%
     ),
     linear-gradient(150deg, #151821 0%, #1a1924 54%, #151720 100%);
+
+  /* Dark keeps its paper surface for these sections — no white in dark mode. */
+  --section-surface: var(--paper-surface);
   --demo-surface:
     radial-gradient(
       ellipse 68% 60% at 80% 12%,
@@ -165,6 +182,14 @@ main {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+/* Reusable global content boundary.
+   Establishes the website's shared left/right alignment edge via the capped
+   --page-gutter. No width cap, so sections still expand on wide viewports. */
+.pulse-content {
+  width: 100%;
+  padding-inline: var(--page-gutter);
 }
 
 button,
@@ -306,15 +331,13 @@ a {
   position: fixed;
   z-index: 100;
   top: 1rem;
-  right: 0;
-  left: 0;
+  right: var(--page-gutter);
+  left: var(--page-gutter);
   display: grid;
   grid-template-columns: minmax(84px, 1fr) auto minmax(84px, 1fr);
   align-items: center;
   gap: 1rem;
-  width: min(calc(100% - (var(--page-gutter) * 2)), var(--content-wide));
   min-height: 52px;
-  margin-inline: auto;
   pointer-events: none;
 }
 
@@ -587,8 +610,6 @@ a {
   grid-template-columns: minmax(0, 0.8fr) minmax(22rem, 1.35fr) minmax(9rem, 0.42fr);
   column-gap: clamp(1rem, 1.8vw, 2.5rem);
   min-height: 100svh;
-  width: min(100%, var(--content-hero));
-  margin-inline: auto;
   padding: 7.5rem var(--page-gutter) 2rem;
 }
 
@@ -935,14 +956,13 @@ a {
 
 .pulse-intro-body {
   display: grid;
-  grid-template-columns: minmax(18rem, 0.82fr) minmax(31rem, 1.18fr);
-  gap: clamp(3rem, 5vw, 5rem);
+  grid-template-columns: 1.45fr 0.55fr;
+  gap: 8vw;
   min-height: clamp(32rem, 68svh, 42rem);
-  width: min(100%, var(--content-wide));
-  margin-inline: auto;
   padding: clamp(4rem, 5vw, 5.5rem) var(--page-gutter);
   align-content: center;
   align-items: center;
+  container-type: inline-size; /* content width shared with the demo grid */
 }
 
 .pulse-intro h2,
@@ -958,13 +978,42 @@ a {
   text-wrap: balance;
 }
 
+/* Structural content blocks (Hero-reference hierarchy).
+   These wrappers exist only to establish parent -> child layout relationships.
+   No spacing/size/position values are set here so existing responsive
+   behavior is preserved unchanged. */
+.pulse-intro-content {
+  min-width: 0;
+}
+
+/* Alignment applies ONLY to the wrapper holding the body copy, never the
+   heading wrapper — both share .pulse-intro-content. */
+.pulse-intro-content:has(.pulse-intro-copy) {
+  display: grid;
+  align-content: center;
+  justify-items: end;
+}
+
+.pulse-thesis-details {
+  min-width: 0;
+}
+
 .pulse-intro h2 {
   max-width: 13ch;
 }
 
 .pulse-intro-copy {
   align-self: center;
-  max-width: 29rem;
+  width: min(100%, 29rem);
+  /* Half the slack the demo card leaves when it hits its max width,
+     so both right edges land on the same line. Resolves to 0 below the cap. */
+  margin-inline-end: max(
+    0px,
+    calc(
+      ((100cqw - var(--demo-gap)) * var(--demo-object-fraction) -
+        var(--demo-object-max)) / 2
+    )
+  );
 }
 
 .pulse-intro-copy p,
@@ -988,11 +1037,10 @@ a {
 
 .pulse-demonstration-inner {
   display: grid;
-  grid-template-columns: minmax(18rem, 0.82fr) minmax(31rem, 1.18fr);
-  gap: clamp(3rem, 5vw, 5rem);
-  width: min(100%, var(--content-wide));
-  margin-inline: auto;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(2rem, 5vw, 6rem);
   padding: var(--section-space) var(--page-gutter);
+  align-items: start;
 }
 
 .pulse-demo-copy {
@@ -1039,7 +1087,7 @@ a {
   position: relative;
   min-width: 0;
   align-self: center;
-  justify-self: start;
+  justify-self: center;
   width: min(100%, 58rem);
   isolation: isolate;
   overflow: hidden;
@@ -1171,7 +1219,7 @@ a {
   position: relative;
   display: grid;
   grid-template-areas: "visual content";
-  grid-template-columns: minmax(420px, 0.9fr) minmax(0, 1.1fr);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   min-height: 100svh;
   overflow: hidden;
   background:
@@ -1185,14 +1233,14 @@ a {
       color-mix(in srgb, var(--lilac) 9%, transparent),
       transparent 34%
     ),
-    var(--paper-surface);
+    var(--section-surface);
 }
 
 .pulse-thesis-content {
   grid-area: content;
   min-width: 0;
   align-self: center;
-  padding: var(--section-space) clamp(2rem, 6vw, 7rem);
+  padding: var(--section-space) var(--page-gutter);
 }
 
 .pulse-thesis h2 {
@@ -1200,8 +1248,9 @@ a {
 }
 
 .pulse-thesis-summary {
-  max-width: 42rem;
-  margin: 2rem 0 0;
+  width: 100%;
+  max-width: none;
+  margin: 1.5rem 0 0;
   color: var(--muted-ink);
   font-size: 1rem;
   line-height: 1.65;
@@ -1210,8 +1259,9 @@ a {
 .pulse-thesis-methods {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  max-width: 58rem;
-  margin-top: clamp(3rem, 5vw, 4.5rem);
+  width: 100%;
+  max-width: none;
+  margin-top: clamp(2.25rem, 4vw, 3.5rem);
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
@@ -1258,7 +1308,8 @@ a {
   display: grid;
   grid-template-columns: 0.72fr 1fr;
   gap: 2rem;
-  max-width: 58rem;
+  width: 100%;
+  max-width: none;
   align-items: start;
   padding-top: 2rem;
 }
@@ -1282,7 +1333,7 @@ a {
   position: absolute;
   z-index: 2;
   top: clamp(2rem, 4vw, 4rem);
-  left: 3.5vw;
+  left: var(--page-gutter);
   margin: 0;
   color: var(--teal-dark);
   font-size: 0.72rem;
@@ -1422,7 +1473,7 @@ a {
 
 .pulse-fusion-caption {
   position: absolute;
-  right: 3.5vw;
+  right: var(--page-gutter);
   bottom: clamp(2rem, 4vw, 4rem);
   max-width: 17rem;
   margin: 0;
@@ -1437,7 +1488,7 @@ a {
   min-height: 90svh;
   place-items: center;
   overflow: hidden;
-  padding: clamp(4rem, 12vw, 8rem) 3.5vw;
+  padding: clamp(4rem, 12vw, 8rem) var(--page-gutter);
   color: #fff;
   background: linear-gradient(
     to bottom,
@@ -1497,7 +1548,7 @@ a {
 .pulse-closing-content > p {
   max-width: 38rem;
   margin-top: 2.2rem;
-  color: #e6e0f0;
+  color: var(--text-closing-muted);
 }
 
 .pulse-closing-action {
@@ -1512,8 +1563,8 @@ a {
 .pulse-footer {
   position: relative;
   z-index: 11;
-  padding: clamp(2.25rem, 3.5vw, 3rem) 3.5vw 1.1rem;
-  color: #f8f6f0;
+  padding: clamp(2.25rem, 3.5vw, 3rem) var(--page-gutter) 1.1rem;
+  color: var(--text-on-dark);
   background:
     linear-gradient(
       115deg,
@@ -1528,7 +1579,7 @@ a {
 .pulse-footer::before {
   position: absolute;
   top: 0;
-  left: 3.5vw;
+  left: var(--page-gutter);
   width: clamp(5rem, 11vw, 11rem);
   height: 1px;
   background: linear-gradient(
@@ -1557,10 +1608,10 @@ a {
 .pulse-footer-brand > p {
   max-width: 32rem;
   margin: 0.85rem 0 0;
-  color: #f8f6f0;
+  color: var(--text-on-dark-muted);
   font-size: 1rem;
   line-height: 1.55;
-  opacity: 0.72;
+  opacity: 1;
 }
 
 .pulse-footer-label {
@@ -1576,19 +1627,19 @@ a {
 .pulse-footer-location > p:last-child {
   max-width: 12rem;
   margin: 0;
-  color: #f8f6f0;
+  color: var(--text-on-dark-muted);
   font-size: 1rem;
   line-height: 1.55;
-  opacity: 0.72;
+  opacity: 1;
 }
 
 .pulse-footer-contact > p:last-child {
   max-width: 17rem;
   margin: 0.65rem 0 0;
-  color: #f8f6f0;
+  color: var(--text-on-dark-muted);
   font-size: 1rem;
   line-height: 1.55;
-  opacity: 0.68;
+  opacity: 1;
 }
 
 .pulse-footer-email {
@@ -1718,7 +1769,7 @@ a {
   }
 
   .pulse-thesis-content {
-    padding: clamp(5rem, 8vw, 7rem) 3.5vw;
+    padding: clamp(5rem, 8vw, 7rem) var(--page-gutter);
   }
 
   .pulse-thesis-visual {
@@ -1871,7 +1922,7 @@ a {
   }
 
   .pulse-intro-copy {
-    max-width: 40rem;
+    width: min(100%, 40rem);
   }
 
   .pulse-intro h2,
@@ -2040,7 +2091,6 @@ a {
     grid-template-columns: minmax(0, 1fr) 44px;
     grid-template-rows: 52px;
     align-items: center;
-    width: calc(100% - 0.8rem);
   }
 
   .pulse-nav > span[aria-hidden="true"] {
@@ -2169,3 +2219,108 @@ a {
   }
 
 }
+
+/* ============================================================
+   TYPOGRAPHY DEBUG MODE
+   Enable via ?debug=typography — the index.html script sets
+   data-typography-debug="true" on <html>.
+   Shows bounding boxes, baseline grid, alignment guides.
+   ============================================================ */
+
+/* Bounding boxes: headings */
+[data-typography-debug="true"] h1,
+[data-typography-debug="true"] h2,
+[data-typography-debug="true"] h3 {
+  outline: 1px dashed rgba(239, 21, 122, 0.5);
+  outline-offset: 2px;
+  background: rgba(239, 21, 122, 0.04);
+}
+
+/* Bounding boxes: paragraphs / body text / labels / kicker / footer text */
+[data-typography-debug="true"] p,
+[data-typography-debug="true"] .pulse-hero-description,
+[data-typography-debug="true"] .pulse-hero h1,
+[data-typography-debug="true"] .pulse-kicker,
+[data-typography-debug="true"] .pulse-section-heading p,
+[data-typography-debug="true"] .pulse-footer-label,
+[data-typography-debug="true"] .pulse-footer-brand > p,
+[data-typography-debug="true"] .pulse-footer-location > p:last-child,
+[data-typography-debug="true"] .pulse-footer-contact > p:last-child,
+[data-typography-debug="true"] .pulse-footer-email,
+[data-typography-debug="true"] .pulse-footer-bottom p {
+  outline: 1px dashed rgba(56, 189, 248, 0.4);
+  outline-offset: 2px;
+  background: rgba(56, 189, 248, 0.03);
+}
+
+/* Left content edge guide (page-gutter) */
+[data-typography-debug="true"] body::before {
+  content: "";
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  bottom: 0;
+  left: var(--page-gutter);
+  width: 1px;
+  background: rgba(16, 185, 129, 0.5);
+  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.3);
+  pointer-events: none;
+}
+
+/* Right content edge guide (page-gutter) */
+[data-typography-debug="true"] body::after {
+  content: "";
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  bottom: 0;
+  right: var(--page-gutter);
+  width: 1px;
+  background: rgba(16, 185, 129, 0.5);
+  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.3);
+  pointer-events: none;
+}
+
+/* Center line guide */
+[data-typography-debug="true"] .pulse-page-brand::after {
+  content: "";
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: rgba(251, 146, 60, 0.4);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+/* Baseline grid on body */
+[data-typography-debug="true"] body {
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(107, 114, 128, 0.08) 0px,
+      rgba(107, 114, 128, 0.08) 1px,
+      transparent 1px,
+      transparent 1.55rem
+    );
+  background-attachment: fixed;
+}
+
+/* Debug info banner */
+[data-typography-debug="true"] .pulse-page-brand::before {
+  content: "Typography debug — green=left/right content edge  orange=center  red boxes=headings  blue boxes=body text";
+  position: fixed;
+  z-index: 99999;
+  top: 0.5rem;
+  left: var(--page-gutter);
+  padding: 4px 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-size: 0.65rem;
+  font-family: monospace;
+  border-radius: 3px;
+  pointer-events: none;
+}
+
