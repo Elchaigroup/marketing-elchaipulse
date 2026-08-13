@@ -44,11 +44,30 @@
   --closing-bg: #6d56a8;
   --footer-bg: #17141e;
   --focus-contrast: rgba(255, 255, 255, 0.92);
+
+  /* Semantic typography tokens (supporting/body text hierarchy) */
+  --text-on-dark: #f8f6f0;
+  --text-on-dark-muted: rgba(248, 246, 240, 0.72);
+  --text-closing-muted: #e6e0f0;
   --canvas-surface: var(--porcelain);
   --paper-surface: var(--paper);
   --demo-surface: var(--demo-bg);
+
+  /* White surface for the thesis + security sections (light only). */
+  --section-surface: #ffffff;
+
+  /* Geometry mirrored from .pulse-demonstration-inner / .pulse-voice-object,
+     so intro copy can align to the demo card without hardcoded offsets. */
+  --demo-gap: clamp(2rem, 5vw, 6rem);
+  --demo-object-fraction: 0.64; /* 1.28fr of the 2fr track */
+  --demo-object-max: 58rem;
   --display: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
   --body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --display-tracking: -0.02em;
+  --page-gutter: clamp(1.25rem, 3.5vw, 4.5rem);
+  --section-space: clamp(4.5rem, 7.5vw, 8rem);
+  --content-wide: 90rem;
+  --content-hero: 108rem;
   color: var(--ink);
   background: var(--canvas-surface);
   font-family: var(--body);
@@ -117,6 +136,9 @@
       transparent 66%
     ),
     linear-gradient(150deg, #151821 0%, #1a1924 54%, #151720 100%);
+
+  /* Dark keeps its paper surface for these sections — no white in dark mode. */
+  --section-surface: var(--paper-surface);
   --demo-surface:
     radial-gradient(
       ellipse 68% 60% at 80% 12%,
@@ -162,6 +184,14 @@ a {
   text-decoration: none;
 }
 
+/* Reusable global content boundary.
+   Establishes the website's shared left/right alignment edge via the capped
+   --page-gutter. No width cap, so sections still expand on wide viewports. */
+.pulse-content {
+  width: 100%;
+  padding-inline: var(--page-gutter);
+}
+
 button,
 a {
   -webkit-tap-highlight-color: transparent;
@@ -176,30 +206,6 @@ a {
   outline: 2px solid var(--violet);
   outline-offset: 3px;
   box-shadow: 0 0 0 5px var(--focus-contrast);
-}
-
-.pulse-skip-link {
-  position: fixed;
-  z-index: 200;
-  top: 0.75rem;
-  left: 0.75rem;
-  display: inline-flex;
-  min-height: 44px;
-  align-items: center;
-  padding-inline: 1rem;
-  color: var(--button-fg);
-  background: var(--button-bg);
-  border-radius: 999px;
-  font-size: 0.72rem;
-  font-weight: 650;
-  transform: translateY(calc(-100% - 1rem));
-  transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.pulse-skip-link:focus-visible {
-  outline: 2px solid var(--violet);
-  outline-offset: 3px;
-  transform: translateY(0);
 }
 
 .pulse-slide-tab:focus-visible {
@@ -325,23 +331,21 @@ a {
   position: fixed;
   z-index: 100;
   top: 1rem;
-  right: 0;
-  left: 0;
+  right: var(--page-gutter);
+  left: var(--page-gutter);
   display: grid;
   grid-template-columns: minmax(84px, 1fr) auto minmax(84px, 1fr);
   align-items: center;
   gap: 1rem;
-  width: calc(100% - 7vw);
   min-height: 52px;
-  margin-inline: auto;
   pointer-events: none;
 }
 
 .pulse-page-brand {
-  position: absolute;
+  position: fixed;
   z-index: 101;
   top: 1rem;
-  left: 3.5vw;
+  left: var(--page-gutter);
   display: inline-flex;
   width: 116px;
   height: 44px;
@@ -459,6 +463,58 @@ a {
   width: 116px;
 }
 
+.pulse-brand-lockup.is-scroll-collapsible {
+  overflow: visible;
+}
+
+.pulse-brand-orb-crop,
+.pulse-brand-word-crop {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+}
+
+.pulse-brand-orb-crop {
+  right: auto;
+  width: 32.1%;
+  border-radius: 50%;
+  transform: translateZ(0);
+}
+
+.pulse-brand-orb-crop .pulse-brand-logo {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 311.5%;
+  max-width: none;
+}
+
+.pulse-brand-word-crop {
+  clip-path: inset(0 0 0 31.6%);
+  transform: translateX(0) scaleX(1);
+  transform-origin: left center;
+  opacity: 1;
+  filter: blur(0);
+  transition:
+    clip-path 520ms cubic-bezier(0.77, 0, 0.175, 1),
+    transform 520ms cubic-bezier(0.77, 0, 0.175, 1),
+    opacity 260ms cubic-bezier(0.23, 1, 0.32, 1),
+    filter 260ms cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: clip-path, transform, opacity;
+}
+
+.is-logo-collapsed .pulse-page-brand .pulse-brand-word-crop {
+  clip-path: inset(0 68.4% 0 31.6%);
+  transform: translateX(-18%) scaleX(0.86);
+  opacity: 0;
+  filter: blur(1.5px);
+  transition:
+    clip-path 600ms cubic-bezier(0.77, 0, 0.175, 1),
+    transform 600ms cubic-bezier(0.77, 0, 0.175, 1),
+    opacity 160ms cubic-bezier(0.4, 0, 1, 1) 400ms,
+    filter 180ms cubic-bezier(0.4, 0, 1, 1) 360ms;
+}
+
 .pulse-brand-logo {
   display: block;
   width: 100%;
@@ -552,8 +608,9 @@ a {
   z-index: 2;
   display: grid;
   grid-template-columns: minmax(0, 0.8fr) minmax(22rem, 1.35fr) minmax(9rem, 0.42fr);
+  column-gap: clamp(1rem, 1.8vw, 2.5rem);
   min-height: 100svh;
-  padding: 7.5rem 3.5vw 2rem;
+  padding: 7.5rem var(--page-gutter) 2rem;
 }
 
 .pulse-hero-copy {
@@ -588,8 +645,8 @@ a {
   font-family: var(--display);
   font-size: clamp(3.2rem, 5.4vw, 6rem);
   font-weight: 470;
-  letter-spacing: -0.04em;
-  line-height: 0.96;
+  letter-spacing: var(--display-tracking);
+  line-height: 1.04;
   text-wrap: wrap;
 }
 
@@ -722,7 +779,7 @@ a {
   z-index: 4;
   align-self: center;
   justify-self: center;
-  width: min(47vw, calc(100svh - 9.5rem), 690px);
+  width: min(100%, 47vw, calc(100svh - 9.5rem), 690px);
   aspect-ratio: 1;
   isolation: isolate;
   animation: orb-arrival 860ms 100ms cubic-bezier(0.16, 1, 0.3, 1) both;
@@ -885,7 +942,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.2rem 3.5vw;
+  padding: 1.2rem var(--page-gutter);
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   color: var(--muted-ink);
@@ -901,7 +958,11 @@ a {
   display: grid;
   grid-template-columns: 1.45fr 0.55fr;
   gap: 8vw;
-  padding: clamp(6rem, 10vw, 10rem) 3.5vw;
+  min-height: clamp(32rem, 68svh, 42rem);
+  padding: clamp(4rem, 5vw, 5.5rem) var(--page-gutter);
+  align-content: center;
+  align-items: center;
+  container-type: inline-size; /* content width shared with the demo grid */
 }
 
 .pulse-intro h2,
@@ -912,9 +973,29 @@ a {
   font-family: var(--display);
   font-size: clamp(3.2rem, 5.2vw, 6rem);
   font-weight: 430;
-  letter-spacing: -0.04em;
+  letter-spacing: var(--display-tracking);
   line-height: 1;
   text-wrap: balance;
+}
+
+/* Structural content blocks (Hero-reference hierarchy).
+   These wrappers exist only to establish parent -> child layout relationships.
+   No spacing/size/position values are set here so existing responsive
+   behavior is preserved unchanged. */
+.pulse-intro-content {
+  min-width: 0;
+}
+
+/* Alignment applies ONLY to the wrapper holding the body copy, never the
+   heading wrapper — both share .pulse-intro-content. */
+.pulse-intro-content:has(.pulse-intro-copy) {
+  display: grid;
+  align-content: center;
+  justify-items: end;
+}
+
+.pulse-thesis-details {
+  min-width: 0;
 }
 
 .pulse-intro h2 {
@@ -922,8 +1003,17 @@ a {
 }
 
 .pulse-intro-copy {
-  align-self: end;
-  max-width: 29rem;
+  align-self: center;
+  width: min(100%, 29rem);
+  /* Half the slack the demo card leaves when it hits its max width,
+     so both right edges land on the same line. Resolves to 0 below the cap. */
+  margin-inline-end: max(
+    0px,
+    calc(
+      ((100cqw - var(--demo-gap)) * var(--demo-object-fraction) -
+        var(--demo-object-max)) / 2
+    )
+  );
 }
 
 .pulse-intro-copy p,
@@ -941,17 +1031,23 @@ a {
 }
 
 .pulse-demonstration {
-  display: grid;
-  grid-template-columns: minmax(300px, 0.72fr) minmax(500px, 1.28fr);
-  gap: 8vw;
-  padding: clamp(5rem, 9vw, 9rem) 3.5vw;
   color: var(--demo-fg);
   background: var(--demo-surface);
+}
+
+.pulse-demonstration-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(2rem, 5vw, 6rem);
+  padding: var(--section-space) var(--page-gutter);
+  align-items: start;
 }
 
 .pulse-demo-copy {
   min-width: 0;
   align-self: center;
+  justify-self: start;
+  width: min(100%, 40rem);
 }
 
 .pulse-section-heading {
@@ -991,6 +1087,8 @@ a {
   position: relative;
   min-width: 0;
   align-self: center;
+  justify-self: center;
+  width: min(100%, 58rem);
   isolation: isolate;
   overflow: hidden;
   padding: clamp(2rem, 4vw, 4rem);
@@ -1121,7 +1219,7 @@ a {
   position: relative;
   display: grid;
   grid-template-areas: "visual content";
-  grid-template-columns: minmax(420px, 0.9fr) minmax(0, 1.1fr);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   min-height: 100svh;
   overflow: hidden;
   background:
@@ -1135,14 +1233,14 @@ a {
       color-mix(in srgb, var(--lilac) 9%, transparent),
       transparent 34%
     ),
-    var(--paper-surface);
+    var(--section-surface);
 }
 
 .pulse-thesis-content {
   grid-area: content;
   min-width: 0;
   align-self: center;
-  padding: clamp(6rem, 9vw, 9rem) clamp(2rem, 6vw, 7rem);
+  padding: var(--section-space) var(--page-gutter);
 }
 
 .pulse-thesis h2 {
@@ -1150,8 +1248,9 @@ a {
 }
 
 .pulse-thesis-summary {
-  max-width: 42rem;
-  margin: 2rem 0 0;
+  width: 100%;
+  max-width: none;
+  margin: 1.5rem 0 0;
   color: var(--muted-ink);
   font-size: 1rem;
   line-height: 1.65;
@@ -1160,8 +1259,9 @@ a {
 .pulse-thesis-methods {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  max-width: 58rem;
-  margin-top: clamp(3rem, 5vw, 4.5rem);
+  width: 100%;
+  max-width: none;
+  margin-top: clamp(2.25rem, 4vw, 3.5rem);
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
@@ -1208,7 +1308,8 @@ a {
   display: grid;
   grid-template-columns: 0.72fr 1fr;
   gap: 2rem;
-  max-width: 58rem;
+  width: 100%;
+  max-width: none;
   align-items: start;
   padding-top: 2rem;
 }
@@ -1232,7 +1333,7 @@ a {
   position: absolute;
   z-index: 2;
   top: clamp(2rem, 4vw, 4rem);
-  left: 3.5vw;
+  left: var(--page-gutter);
   margin: 0;
   color: var(--teal-dark);
   font-size: 0.72rem;
@@ -1372,7 +1473,7 @@ a {
 
 .pulse-fusion-caption {
   position: absolute;
-  right: 3.5vw;
+  right: var(--page-gutter);
   bottom: clamp(2rem, 4vw, 4rem);
   max-width: 17rem;
   margin: 0;
@@ -1384,10 +1485,10 @@ a {
 .pulse-closing {
   position: relative;
   display: grid;
-  min-height: 90vh;
+  min-height: 90svh;
   place-items: center;
   overflow: hidden;
-  padding: 8rem 3.5vw;
+  padding: clamp(4rem, 12vw, 8rem) var(--page-gutter);
   color: #fff;
   background: linear-gradient(
     to bottom,
@@ -1410,7 +1511,7 @@ a {
 .pulse-closing-orb {
   position: absolute;
   inset: 50% auto auto 50%;
-  width: min(70vw, 850px);
+  width: min(70vw, calc(90svh - 2rem), 850px);
   aspect-ratio: 1;
   overflow: hidden;
   border-radius: 50%;
@@ -1447,7 +1548,7 @@ a {
 .pulse-closing-content > p {
   max-width: 38rem;
   margin-top: 2.2rem;
-  color: #e6e0f0;
+  color: var(--text-closing-muted);
 }
 
 .pulse-closing-action {
@@ -1462,8 +1563,8 @@ a {
 .pulse-footer {
   position: relative;
   z-index: 11;
-  padding: clamp(2.25rem, 3.5vw, 3rem) 3.5vw 1.1rem;
-  color: #f8f6f0;
+  padding: clamp(2.25rem, 3.5vw, 3rem) var(--page-gutter) 1.1rem;
+  color: var(--text-on-dark);
   background:
     linear-gradient(
       115deg,
@@ -1478,7 +1579,7 @@ a {
 .pulse-footer::before {
   position: absolute;
   top: 0;
-  left: 3.5vw;
+  left: var(--page-gutter);
   width: clamp(5rem, 11vw, 11rem);
   height: 1px;
   background: linear-gradient(
@@ -1507,10 +1608,10 @@ a {
 .pulse-footer-brand > p {
   max-width: 32rem;
   margin: 0.85rem 0 0;
-  color: #f8f6f0;
+  color: var(--text-on-dark-muted);
   font-size: 1rem;
   line-height: 1.55;
-  opacity: 0.72;
+  opacity: 1;
 }
 
 .pulse-footer-label {
@@ -1526,19 +1627,19 @@ a {
 .pulse-footer-location > p:last-child {
   max-width: 12rem;
   margin: 0;
-  color: #f8f6f0;
+  color: var(--text-on-dark-muted);
   font-size: 1rem;
   line-height: 1.55;
-  opacity: 0.72;
+  opacity: 1;
 }
 
 .pulse-footer-contact > p:last-child {
   max-width: 17rem;
   margin: 0.65rem 0 0;
-  color: #f8f6f0;
+  color: var(--text-on-dark-muted);
   font-size: 1rem;
   line-height: 1.55;
-  opacity: 0.68;
+  opacity: 1;
 }
 
 .pulse-footer-email {
@@ -1641,9 +1742,10 @@ a {
   }
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 1024px) {
   .pulse-hero-grid {
     grid-template-columns: minmax(260px, 0.8fr) minmax(430px, 1.2fr);
+    column-gap: clamp(1.5rem, 3vw, 3rem);
   }
 
   .pulse-hero-note {
@@ -1651,10 +1753,10 @@ a {
   }
 
   .pulse-orb-stage {
-    width: min(55vw, calc(100svh - 8.5rem), 620px);
+    width: min(100%, 55vw, calc(100svh - 8.5rem), 620px);
   }
 
-  .pulse-demonstration {
+  .pulse-demonstration-inner {
     gap: 5vw;
   }
 
@@ -1667,7 +1769,7 @@ a {
   }
 
   .pulse-thesis-content {
-    padding: clamp(5rem, 8vw, 7rem) 3.5vw;
+    padding: clamp(5rem, 8vw, 7rem) var(--page-gutter);
   }
 
   .pulse-thesis-visual {
@@ -1681,7 +1783,7 @@ a {
   }
 }
 
-@media (min-width: 921px) and (max-height: 820px) {
+@media (min-width: 769px) and (max-height: 820px) {
   .pulse-hero-grid {
     min-height: 100svh;
     padding-top: 5.75rem;
@@ -1709,7 +1811,7 @@ a {
   }
 
   .pulse-intro-body,
-  .pulse-demonstration {
+  .pulse-demonstration-inner {
     padding-top: clamp(4.5rem, 7vw, 6.5rem);
     padding-bottom: clamp(4.5rem, 7vw, 6.5rem);
   }
@@ -1721,7 +1823,7 @@ a {
   }
 }
 
-@media (max-width: 920px) {
+@media (max-width: 768px) {
   .pulse-scroll-meter {
     right: 7px;
     height: 72px;
@@ -1754,8 +1856,7 @@ a {
   }
 
   .pulse-hero-grid {
-    display: flex;
-    flex-direction: column;
+    grid-template-columns: 1fr;
     min-height: 100svh;
     padding: 6.5rem 1.25rem 2rem;
   }
@@ -1792,8 +1893,12 @@ a {
   }
 
   .pulse-intro-body,
-  .pulse-demonstration {
+  .pulse-demonstration-inner {
     grid-template-columns: 1fr;
+  }
+
+  .pulse-intro-body {
+    min-height: auto;
   }
 
   .pulse-thesis {
@@ -1808,12 +1913,16 @@ a {
   }
 
   .pulse-intro-body,
-  .pulse-demonstration {
+  .pulse-demonstration-inner {
     padding-inline: 1.25rem;
   }
 
   .pulse-intro-body {
     gap: 3rem;
+  }
+
+  .pulse-intro-copy {
+    width: min(100%, 40rem);
   }
 
   .pulse-intro h2,
@@ -1823,8 +1932,12 @@ a {
     max-width: 100%;
   }
 
-  .pulse-demonstration {
+  .pulse-demonstration-inner {
     gap: 4rem;
+  }
+
+  .pulse-demo-copy {
+    justify-self: start;
   }
 
   .pulse-section-heading {
@@ -1840,22 +1953,7 @@ a {
   }
 
   .pulse-thesis-content {
-    padding: 5rem 1.25rem;
-  }
-
-  .pulse-thesis-methods {
-    grid-template-columns: 1fr;
-  }
-
-  .pulse-thesis-methods article {
-    padding: 2rem 0 2.2rem;
-  }
-
-  .pulse-thesis-methods article + article {
-    padding-right: 0;
-    padding-left: 0;
-    border-top: 1px solid var(--line);
-    border-left: 0;
+    padding: var(--section-space) 1.25rem;
   }
 
   .pulse-thesis-result {
@@ -1864,7 +1962,7 @@ a {
   }
 
   .pulse-thesis-visual {
-    min-height: min(760px, 90svh);
+    min-height: min(620px, 72svh);
     border-top: 1px solid var(--line);
     border-right: 0;
   }
@@ -1882,7 +1980,7 @@ a {
   }
 
   .pulse-closing {
-    min-height: 82vh;
+    min-height: auto;
     padding-inline: 1.25rem;
   }
 
@@ -1904,7 +2002,7 @@ a {
   }
 }
 
-@media (max-width: 820px) {
+@media (max-width: 640px) {
   .pulse-auth-link {
     display: none;
   }
@@ -1923,17 +2021,17 @@ a {
   }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 480px) {
   .pulse-thesis-visual {
-    min-height: 620px;
+    min-height: 520px;
   }
 
   .pulse-fusion-diagram {
-    width: min(96vw, 470px);
+    width: min(88vw, 420px);
   }
 
   .pulse-fusion-node {
-    width: 132px;
+    width: 120px;
     padding-inline: 0.65rem;
   }
 
@@ -1948,30 +2046,16 @@ a {
   }
 }
 
-@media (min-width: 821px) and (max-width: 920px) {
-  .pulse-nav {
-    grid-template-columns: minmax(84px, 1fr) auto minmax(84px, 1fr);
-    gap: 1rem;
-    width: calc(100% - 2.5rem);
-    min-height: 52px;
+@media (prefers-reduced-motion: reduce) {
+  .pulse-brand-word-crop {
+    transition: opacity 120ms ease-out;
   }
 
-  .pulse-page-brand {
-    left: 1.25rem;
-    display: inline-flex;
-  }
-
-  .pulse-slide-tabs {
-    width: max-content;
-  }
-
-  .pulse-slide-tabs li {
-    flex: 0 0 auto;
-  }
-
-  .pulse-slide-tab {
-    min-height: 42px;
-    padding-inline: 1.05rem;
+  .is-logo-collapsed .pulse-page-brand .pulse-brand-word-crop {
+    clip-path: inset(0 68.4% 0 31.6%);
+    transform: none;
+    filter: none;
+    transition: opacity 120ms ease-out;
   }
 }
 
@@ -1983,15 +2067,30 @@ a {
   .pulse-tab-label-compact {
     display: inline;
   }
+
+  .pulse-thesis-methods {
+    grid-template-columns: 1fr;
+  }
+
+  .pulse-thesis-methods article {
+    padding: 1.75rem 0 2rem;
+  }
+
+  .pulse-thesis-methods article + article {
+    padding-right: 0;
+    padding-left: 0;
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
 }
 
-@media (max-width: 520px) {
+@media (max-width: 480px) {
   .pulse-nav {
     top: 0.65rem;
     grid-template-columns: minmax(0, 1fr) 44px;
     grid-template-rows: 52px;
     align-items: center;
-    width: calc(100% - 0.8rem);
   }
 
   .pulse-nav > span[aria-hidden="true"] {
@@ -2033,8 +2132,16 @@ a {
   .pulse-hero h1 {
     max-width: 100%;
     font-size: clamp(2.75rem, 12.1vw, 3.2rem);
-    line-height: 0.98;
-    letter-spacing: -0.035em;
+    line-height: 1.04;
+    letter-spacing: var(--display-tracking);
+  }
+
+  .pulse-intro h2,
+  .pulse-demo-copy h2,
+  .pulse-thesis h2,
+  .pulse-closing h2 {
+    font-size: clamp(2.5rem, 10.5vw, 3rem);
+    line-height: 1;
   }
 
   .pulse-hero-description {
@@ -2042,7 +2149,7 @@ a {
   }
 
   .pulse-orb-stage {
-    width: min(90vw, 400px);
+    width: min(88vw, 390px);
     margin: 0.5rem 0 -1.25rem;
   }
 
@@ -2112,3 +2219,108 @@ a {
   }
 
 }
+
+/* ============================================================
+   TYPOGRAPHY DEBUG MODE
+   Enable via ?debug=typography — the index.html script sets
+   data-typography-debug="true" on <html>.
+   Shows bounding boxes, baseline grid, alignment guides.
+   ============================================================ */
+
+/* Bounding boxes: headings */
+[data-typography-debug="true"] h1,
+[data-typography-debug="true"] h2,
+[data-typography-debug="true"] h3 {
+  outline: 1px dashed rgba(239, 21, 122, 0.5);
+  outline-offset: 2px;
+  background: rgba(239, 21, 122, 0.04);
+}
+
+/* Bounding boxes: paragraphs / body text / labels / kicker / footer text */
+[data-typography-debug="true"] p,
+[data-typography-debug="true"] .pulse-hero-description,
+[data-typography-debug="true"] .pulse-hero h1,
+[data-typography-debug="true"] .pulse-kicker,
+[data-typography-debug="true"] .pulse-section-heading p,
+[data-typography-debug="true"] .pulse-footer-label,
+[data-typography-debug="true"] .pulse-footer-brand > p,
+[data-typography-debug="true"] .pulse-footer-location > p:last-child,
+[data-typography-debug="true"] .pulse-footer-contact > p:last-child,
+[data-typography-debug="true"] .pulse-footer-email,
+[data-typography-debug="true"] .pulse-footer-bottom p {
+  outline: 1px dashed rgba(56, 189, 248, 0.4);
+  outline-offset: 2px;
+  background: rgba(56, 189, 248, 0.03);
+}
+
+/* Left content edge guide (page-gutter) */
+[data-typography-debug="true"] body::before {
+  content: "";
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  bottom: 0;
+  left: var(--page-gutter);
+  width: 1px;
+  background: rgba(16, 185, 129, 0.5);
+  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.3);
+  pointer-events: none;
+}
+
+/* Right content edge guide (page-gutter) */
+[data-typography-debug="true"] body::after {
+  content: "";
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  bottom: 0;
+  right: var(--page-gutter);
+  width: 1px;
+  background: rgba(16, 185, 129, 0.5);
+  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.3);
+  pointer-events: none;
+}
+
+/* Center line guide */
+[data-typography-debug="true"] .pulse-page-brand::after {
+  content: "";
+  position: fixed;
+  z-index: 9998;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: rgba(251, 146, 60, 0.4);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+/* Baseline grid on body */
+[data-typography-debug="true"] body {
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(107, 114, 128, 0.08) 0px,
+      rgba(107, 114, 128, 0.08) 1px,
+      transparent 1px,
+      transparent 1.55rem
+    );
+  background-attachment: fixed;
+}
+
+/* Debug info banner */
+[data-typography-debug="true"] .pulse-page-brand::before {
+  content: "Typography debug — green=left/right content edge  orange=center  red boxes=headings  blue boxes=body text";
+  position: fixed;
+  z-index: 99999;
+  top: 0.5rem;
+  left: var(--page-gutter);
+  padding: 4px 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-size: 0.65rem;
+  font-family: monospace;
+  border-radius: 3px;
+  pointer-events: none;
+}
+

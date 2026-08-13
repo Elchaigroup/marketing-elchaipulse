@@ -1,5 +1,6 @@
 import { Fingerprint, Network, ShieldCheck, UserRoundCheck } from "lucide-react";
 import { EncryptedText } from "./encrypted-text";
+import { SecurityHoverField } from "./security-hover-field";
 
 const privacyPrinciples = [
   {
@@ -33,6 +34,8 @@ export function SecurityStory() {
       aria-labelledby="security-title"
       data-motion="security-story"
     >
+      <SecurityHoverField />
+
       <div className="pulse-security-lead">
         <div className="pulse-security-copy">
           <p className="security-eyebrow">Security / Privacy / Data protection</p>

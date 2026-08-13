@@ -36,9 +36,6 @@ function App() {
 
   return (
     <main ref={siteRef}>
-      <a className="pulse-skip-link" href="#product">
-        Skip to main content
-      </a>
       <ScrollMotion />
       <SiteMotion scope={siteRef} />
       <AnomalousMatterHero
@@ -52,79 +49,85 @@ function App() {
           <ArrowDown size={15} strokeWidth={1.7} aria-hidden="true" />
         </div>
         <div className="pulse-intro-body">
-          <h2 id="product-title" data-reveal="headline">
-            The answer exists. Finding it is the bottleneck.
-          </h2>
-          <div className="pulse-intro-copy" data-reveal="copy">
-            <p>
-              Important context is scattered across documents, meetings, inboxes,
-              and spreadsheets. Teams lose time searching, repeating questions,
-              and waiting for the one person who remembers.
-            </p>
-            <p className="pulse-muted">
-              Pulse brings the right context forward quickly, so decisions keep
-              moving without a search chain or knowledge bottleneck.
-            </p>
+          <div className="pulse-intro-content">
+            <h2 id="product-title" data-reveal="headline">
+              The answer exists. Finding it is the bottleneck.
+            </h2>
+          </div>
+          <div className="pulse-intro-content">
+            <div className="pulse-intro-copy" data-reveal="copy">
+              <p>
+                Important context is scattered across documents, meetings, inboxes,
+                and spreadsheets. Teams lose time searching, repeating questions,
+                and waiting for the one person who remembers.
+              </p>
+              <p className="pulse-muted">
+                Pulse brings the right context forward quickly, so decisions keep
+                moving without a search chain or knowledge bottleneck.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       <section id="demo" className="pulse-demonstration" aria-labelledby="demo-title">
-        <div className="pulse-demo-copy">
-          <div className="pulse-section-heading" data-reveal="signal">
-            <span className="pulse-symbol" aria-hidden="true">
-              <Waves size={18} strokeWidth={1.7} />
-            </span>
-            <p>Pulse in action</p>
+        <div className="pulse-demonstration-inner">
+          <div className="pulse-demo-copy">
+            <div className="pulse-section-heading" data-reveal="signal">
+              <span className="pulse-symbol" aria-hidden="true">
+                <Waves size={18} strokeWidth={1.7} />
+              </span>
+              <p>Pulse in action</p>
+            </div>
+            <h2 id="demo-title" data-reveal="headline">
+              Ask once. Move faster.
+            </h2>
+            <p data-reveal="copy">
+              Ask Pulse by voice or text. It moves across your company’s knowledge,
+              finds what matters, and responds in moments with the context your team
+              needs to act.
+            </p>
           </div>
-          <h2 id="demo-title" data-reveal="headline">
-            Ask once. Move faster.
-          </h2>
-          <p data-reveal="copy">
-            Ask Pulse by voice or text. It moves across your company’s knowledge,
-            finds what matters, and responds in moments with the context your team
-            needs to act.
-          </p>
-        </div>
 
-        <div
-          className="pulse-voice-object"
-          aria-label="Synthetic Pulse workspace conversation"
-          data-motion="voice-card"
-        >
-          <div className="pulse-listening-state">
-            <span className="pulse-listening-dot" aria-hidden="true" />
-            Listening
-          </div>
-          <div className="pulse-waveform" aria-hidden="true">
-            {waveform.map((height, index) => (
-              <span
-                key={`${height}-${index}`}
-                style={
-                  {
-                    "--wave-height": `${height}%`,
-                    "--wave-delay": `${index * -38}ms`,
-                  } as React.CSSProperties
-                }
-              />
-            ))}
-          </div>
-          <div className="pulse-transcript">
-            <div>
-              <span>You</span>
-              <p>“What did we agree about the renewal timeline?”</p>
+          <div
+            className="pulse-voice-object"
+            aria-label="Synthetic Pulse workspace conversation"
+            data-motion="voice-card"
+          >
+            <div className="pulse-listening-state">
+              <span className="pulse-listening-dot" aria-hidden="true" />
+              Listening
             </div>
-            <div className="pulse-response">
-              <span>Pulse</span>
-              <p>
-                “The meeting record says the renewal stays annual, with pricing
-                reviewed in October.”
-              </p>
+            <div className="pulse-waveform" aria-hidden="true">
+              {waveform.map((height, index) => (
+                <span
+                  key={`${height}-${index}`}
+                  style={
+                    {
+                      "--wave-height": `${height}%`,
+                      "--wave-delay": `${index * -38}ms`,
+                    } as React.CSSProperties
+                  }
+                />
+              ))}
             </div>
+            <div className="pulse-transcript">
+              <div>
+                <span>You</span>
+                <p>“What did we agree about the renewal timeline?”</p>
+              </div>
+              <div className="pulse-response">
+                <span>Pulse</span>
+                <p>
+                  “The meeting record says the renewal stays annual, with pricing
+                  reviewed in October.”
+                </p>
+              </div>
+            </div>
+            <p className="pulse-synthetic-note">
+              Synthetic example; answers depend on your documents
+            </p>
           </div>
-          <p className="pulse-synthetic-note">
-            Synthetic example; answers depend on your documents
-          </p>
         </div>
       </section>
 
@@ -156,12 +159,14 @@ function App() {
             </article>
           </div>
 
-          <div className="pulse-thesis-result">
-            <span>Trust by design</span>
-            <p>
-              Faster execution, clear accountability, and no ambiguity about who
-              makes the final call.
-            </p>
+          <div className="pulse-thesis-details">
+            <div className="pulse-thesis-result">
+              <span>Trust by design</span>
+              <p>
+                Faster execution, clear accountability, and no ambiguity about who
+                makes the final call.
+              </p>
+            </div>
           </div>
         </div>
 
@@ -235,7 +240,7 @@ function App() {
           <h2 id="closing-title">See it answer a question about your own documents.</h2>
           <p>
             Point Pulse at a folder of your material and ask something only your
-            team would know. That’s the walkthrough.
+            team would know. That's the walkthrough.
           </p>
           <a
             className="pulse-closing-action focus-ring"
