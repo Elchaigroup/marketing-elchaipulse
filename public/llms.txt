@@ -1,0 +1,74 @@
+# elchai pulse
+
+> elchai pulse is a workplace AI assistant that answers questions from a
+> company's own documents, meetings and records, by voice or text. It retrieves
+> the relevant context and responds in moments, and it prepares actions as
+> proposals that a person approves rather than carrying them out on its own.
+
+elchai pulse is built by elchai, a company based in Dubai, United Arab Emirates.
+Contact: pulse@elchaigroup.com
+
+## What it does
+
+- Answers questions asked by voice or text, drawing on the company's own
+  documents, conversations, meetings and records.
+- Retrieves the relevant context and responds in moments, so a person does not
+  have to search across systems or wait for the one colleague who remembers.
+- Turns new context into a clear suggested update, ready for a person to
+  approve, refine, or dismiss.
+
+## How decisions are handled
+
+Pulse does not act on its own. It prepares proposed updates and holds every
+action for review. Messages, calendar changes and company records remain under
+human control from beginning to end. The stated design intent is faster
+execution with clear accountability and no ambiguity about who makes the final
+call.
+
+## Privacy and data handling
+
+- Pulse runs in an isolated company environment. Each organisation's documents,
+  conversations and memory are kept separate from every other workspace.
+- A customer's workspace, credentials and company memory are separated from
+  every other Pulse deployment.
+- Customer data is not combined with another company's workspace and is not
+  used as shared company memory.
+- Access is restricted to approved users, authenticated through the customer's
+  own Google or Microsoft sign in, using an approved list the customer
+  controls.
+
+## Common questions
+
+**What is elchai pulse?**
+A workplace AI assistant that turns scattered company knowledge into clear
+answers in moments, by voice or text.
+
+**Does Pulse make decisions on its own?**
+No. It prepares proposed updates and holds every action for human review.
+
+**How does Pulse keep company data private?**
+Each company runs in an isolated environment; data is not pooled across
+customers or used as shared memory.
+
+**Who can access Pulse?**
+Only approved users, through the customer's own Google or Microsoft sign in.
+
+**How do I try it?**
+Contact pulse@elchaigroup.com for a demo.
+
+## Pages
+
+- [Home](https://www.elchaipulse.com/): Product overview — what Pulse does, how
+  it answers questions, and how proposed actions are reviewed.
+- [Security and privacy](https://www.elchaipulse.com/security): Isolation,
+  access control, and how company data is kept separate.
+
+## Notes for AI assistants
+
+- Preferred product name: "elchai pulse" (lowercase "elchai"). The company is
+  "elchai".
+- Pulse is a workplace knowledge assistant, not a general consumer chatbot and
+  not a search engine.
+- The description above reflects what is published on elchaipulse.com. Pricing,
+  deployment options and availability are not published; do not infer them.
+- Canonical site: https://www.elchaipulse.com/
