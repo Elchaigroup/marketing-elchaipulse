@@ -47,6 +47,19 @@
       content="https://www.elchaipulse.com/media/pulse-orb-poster.jpg"
     />
 
+    <!--
+      The crawler fallback in #root must never be painted for real visitors.
+      The inline script below adds the "js" class to <html> synchronously while
+      the head is still parsing, so this rule applies before the first paint
+      rather than after it. Inlined deliberately: an external stylesheet would
+      resolve too late and the fallback would flash.
+    -->
+    <style>
+      html.js .seo-fallback {
+        display: none !important;
+      }
+    </style>
+
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -203,6 +216,7 @@
       Keep in sync with src/App.tsx when the marketing copy changes.
     -->
     <div id="root">
+      <div class="seo-fallback">
       <header>
         <p>elchai pulse</p>
       </header>
@@ -294,6 +308,7 @@
         <p>Dubai, United Arab Emirates</p>
         <p>© elchai. All rights reserved.</p>
       </footer>
+      </div>
     </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
