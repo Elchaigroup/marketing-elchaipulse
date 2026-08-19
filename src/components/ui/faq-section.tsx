@@ -1,3 +1,10 @@
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
 const frequentlyAskedQuestions = [
   {
     question: "What is elchai pulse?",
@@ -56,20 +63,37 @@ export function FAQSection() {
         <header className="pulse-faq-heading">
           <p className="pulse-kicker">FAQ</p>
           <h2 id="faq-title">Frequently asked questions</h2>
+          <p>Clear answers to the questions teams ask before meeting Pulse.</p>
         </header>
 
-        <dl className="pulse-faq-list">
-          {frequentlyAskedQuestions.map(({ question, answer }) => (
-            <div className="pulse-faq-item" key={question}>
-              <dt>
-                <h3>{question}</h3>
-              </dt>
-              <dd>
+        <Accordion
+          type="single"
+          collapsible
+          defaultValue="item-1"
+          className="pulse-faq-accordion"
+        >
+          {frequentlyAskedQuestions.map(({ question, answer }, index) => (
+            <AccordionItem
+              value={`item-${index + 1}`}
+              key={question}
+              className="pulse-faq-item"
+            >
+              <AccordionTrigger className="pulse-faq-trigger focus-ring">
+                {question}
+              </AccordionTrigger>
+              <AccordionContent className="pulse-faq-answer">
                 <p>{answer}</p>
-              </dd>
-            </div>
+              </AccordionContent>
+            </AccordionItem>
           ))}
-        </dl>
+        </Accordion>
+
+        <p className="pulse-faq-contact">
+          Still have a question?{" "}
+          <a href="mailto:pulse@elchaigroup.com?subject=Elchai%20Pulse%20question">
+            Contact the Pulse team
+          </a>
+        </p>
       </div>
     </section>
   );
