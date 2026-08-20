@@ -11,6 +11,7 @@ import { useEffect, useRef } from "react";
 import { AnomalousMatterHero } from "@/components/ui/anomalous-matter-hero";
 import { BrandLockup } from "@/components/ui/brand-lockup";
 import { MotionAwareVideo } from "@/components/ui/motion-aware-video";
+import { OpticallyAlignedText } from "@/components/ui/optically-aligned-text";
 import { ScrollMotion } from "@/components/ui/scroll-motion";
 import { SecurityStory } from "@/components/ui/security-story";
 import { SiteMotion } from "@/components/ui/site-motion";
@@ -51,7 +52,7 @@ function App() {
         <div className="pulse-intro-body">
           <div className="pulse-intro-content">
             <h2 id="product-title" data-reveal="headline">
-              The answer exists. Finding it is the bottleneck.
+              <OpticallyAlignedText text="The answer exists. Finding it is the bottleneck." />
             </h2>
           </div>
           <div className="pulse-intro-content">
@@ -80,7 +81,7 @@ function App() {
               <p>Pulse in action</p>
             </div>
             <h2 id="demo-title" data-reveal="headline">
-              Ask once. Move faster.
+              <OpticallyAlignedText text="Ask once. Move faster." />
             </h2>
             <p data-reveal="copy">
               Ask Pulse by voice or text. It moves across your company’s knowledge,
@@ -134,7 +135,9 @@ function App() {
       <section id="thesis" className="pulse-thesis" aria-labelledby="thesis-title">
         <div className="pulse-thesis-content">
           <p className="pulse-kicker">Control by design</p>
-          <h2 id="thesis-title">Pulse proposes. You decide.</h2>
+          <h2 id="thesis-title">
+            <OpticallyAlignedText text="Pulse proposes. You decide." />
+          </h2>
           <p className="pulse-thesis-summary">
             Pulse accelerates work without taking decisions away from people. It
             prepares proposed updates and holds every action for review.
@@ -143,7 +146,9 @@ function App() {
           <div className="pulse-thesis-methods">
             <article>
               <span>Human approval</span>
-              <h3>Every proposal arrives ready for review.</h3>
+              <h3>
+                <OpticallyAlignedText text="Every proposal arrives ready for review." />
+              </h3>
               <p>
                 Pulse turns new context into a clear suggested update, ready for a
                 person to approve, refine, or dismiss.
@@ -151,7 +156,9 @@ function App() {
             </article>
             <article>
               <span>Operational control</span>
-              <h3>Decision authority stays with your team.</h3>
+              <h3>
+                <OpticallyAlignedText text="Decision authority stays with your team." />
+              </h3>
               <p>
                 Messages, calendar changes, and company records remain under human
                 control from beginning to end.
@@ -237,7 +244,9 @@ function App() {
           />
         </div>
         <div className="pulse-closing-content" data-reveal="closing">
-          <h2 id="closing-title">See it answer a question about your own documents.</h2>
+          <h2 id="closing-title">
+            <OpticallyAlignedText text="See it answer a question about your own documents." />
+          </h2>
           <p>
             Point Pulse at a folder of your material and ask something only your
             team would know. That's the walkthrough.

@@ -15,6 +15,8 @@
   position: absolute;
   z-index: 0;
   inset: 0;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   opacity: 0;
   pointer-events: none;
@@ -65,7 +67,7 @@
   );
   background-clip: text;
   color: transparent;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-family: var(--body);
   font-size: clamp(0.5rem, 0.58vw, 0.68rem);
   font-weight: 650;
   letter-spacing: 0.035em;
@@ -75,6 +77,7 @@
   opacity: 0.62;
   text-shadow: 0 0 12px color-mix(in srgb, var(--teal) 24%, transparent);
   user-select: none;
+  contain: paint;
 }
 
 .pulse-security-lead {
@@ -111,8 +114,10 @@
   font-size: clamp(3.2rem, 5.2vw, 6rem);
   font-weight: 440;
   letter-spacing: var(--display-tracking);
-  line-height: 1.04;
+  line-height: 1.08;
   text-wrap: balance;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 .encrypted-text {
@@ -124,7 +129,6 @@
 }
 
 .encrypted-text-word {
-  display: inline-block;
   white-space: nowrap;
 }
 
@@ -323,7 +327,10 @@
   font-size: clamp(1.55rem, 2.4vw, 2.35rem);
   font-weight: 470;
   letter-spacing: -0.03em;
-  line-height: 1.06;
+  line-height: 1.12;
+  text-wrap: balance;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 .pulse-security-architecture article > p {
