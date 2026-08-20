@@ -135,9 +135,7 @@ function App() {
       <section id="thesis" className="pulse-thesis" aria-labelledby="thesis-title">
         <div className="pulse-thesis-content">
           <p className="pulse-kicker">Control by design</p>
-          <h2 id="thesis-title">
-            <OpticallyAlignedText text="Pulse proposes. You decide." />
-          </h2>
+          <h2 id="thesis-title">Pulse proposes. You decide.</h2>
           <p className="pulse-thesis-summary">
             Pulse accelerates work without taking decisions away from people. It
             prepares proposed updates and holds every action for review.
@@ -146,9 +144,7 @@ function App() {
           <div className="pulse-thesis-methods">
             <article>
               <span>Human approval</span>
-              <h3>
-                <OpticallyAlignedText text="Every proposal arrives ready for review." />
-              </h3>
+              <h3>Every proposal arrives ready for review.</h3>
               <p>
                 Pulse turns new context into a clear suggested update, ready for a
                 person to approve, refine, or dismiss.
@@ -156,9 +152,7 @@ function App() {
             </article>
             <article>
               <span>Operational control</span>
-              <h3>
-                <OpticallyAlignedText text="Decision authority stays with your team." />
-              </h3>
+              <h3>Decision authority stays with your team.</h3>
               <p>
                 Messages, calendar changes, and company records remain under human
                 control from beginning to end.
