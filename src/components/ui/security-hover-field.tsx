@@ -65,19 +65,25 @@ export function SecurityHoverField() {
 
       if (context) {
         context.font = `${styles.fontWeight} ${styles.fontSize} ${styles.fontFamily}`;
-        characterWidth = context.measureText("M").width || characterWidth;
+        /* The approved Inter face is proportional. Measuring a single wide
+           glyph such as M underestimates how many random characters fit on a
+           line and can leave the bottom of the section without cipher text. */
+        characterWidth =
+          context.measureText(cipherCharacters).width / cipherCharacters.length ||
+          characterWidth;
       }
 
       characterWidth += letterSpacing;
       if (characterWidth <= 0) return cipherLength;
 
-      const perLine = Math.ceil(bounds.width / characterWidth);
-      const lines = Math.ceil(bounds.height / lineHeight);
+      const perLine = Math.ceil(bounds.width / characterWidth) + 2;
+      const lines = Math.ceil(bounds.height / lineHeight) + 2;
 
-      /* 8% headroom absorbs sub-pixel rounding and the ragged final line. */
+      /* Headroom absorbs sub-pixel rounding, random-glyph variance, and the
+         ragged final line without relying on a viewport-specific height. */
       return Math.min(
         MAX_CIPHER_LENGTH,
-        Math.ceil(perLine * lines * 1.08),
+        Math.ceil(perLine * lines * 1.2),
       );
     };
 
@@ -145,6 +151,11 @@ export function SecurityHoverField() {
       scheduleUpdate();
     };
 
+    const resizeObserver = new ResizeObserver(handleResize);
+    resizeObserver.observe(section);
+    resizeObserver.observe(field);
+
+    void document.fonts.ready.then(handleResize);
     resizeCipher();
 
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
@@ -158,6 +169,7 @@ export function SecurityHoverField() {
       window.removeEventListener("scroll", scheduleUpdate);
       window.removeEventListener("resize", handleResize);
       document.removeEventListener("pointerleave", handlePointerLeaveWindow);
+      resizeObserver.disconnect();
     };
   }, []);
 

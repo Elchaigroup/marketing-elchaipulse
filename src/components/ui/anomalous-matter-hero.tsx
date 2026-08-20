@@ -4,6 +4,7 @@ import { BrandLockup } from "./brand-lockup";
 import { MotionAwareVideo } from "./motion-aware-video";
 import { SlideTabs } from "./slide-tabs";
 import { ThemeToggle } from "./theme-toggle";
+import { OpticallyAlignedText } from "./optically-aligned-text";
 
 // Set to true when the authentication experience is ready to launch.
 const SIGN_IN_ENABLED = false;
@@ -52,7 +53,9 @@ export function AnomalousMatterHero({
 
       <div className="pulse-hero-grid">
         <div className="pulse-hero-copy">
-          <h1>{subtitle}</h1>
+          <h1>
+            <OpticallyAlignedText text={subtitle} />
+          </h1>
           <p className="pulse-hero-description">{description}</p>
           <div className="pulse-hero-actions">
             <a

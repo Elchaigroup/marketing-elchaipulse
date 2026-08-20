@@ -1,6 +1,7 @@
 import { Fingerprint, Network, ShieldCheck, UserRoundCheck } from "lucide-react";
 import { EncryptedText } from "./encrypted-text";
 import { SecurityHoverField } from "./security-hover-field";
+import { OpticallyAlignedText } from "./optically-aligned-text";
 
 const privacyPrinciples = [
   {
@@ -77,7 +78,9 @@ export function SecurityStory() {
               <span>{label}</span>
               <Icon size={23} strokeWidth={1.35} aria-hidden="true" />
             </div>
-            <h3>{title}</h3>
+            <h3>
+              <OpticallyAlignedText text={title} />
+            </h3>
             <p>{description}</p>
           </article>
         ))}

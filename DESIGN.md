@@ -16,31 +16,31 @@ colors:
   hairline: "rgba(17, 19, 26, 0.18)"
 typography:
   display:
-    fontFamily: "\"Avenir Next\", \"Helvetica Neue\", Arial, sans-serif"
+    fontFamily: "\"Inter Variable\", sans-serif"
     fontSize: "clamp(3.9rem, 6.4vw, 6rem)"
     fontWeight: 470
     lineHeight: 0.92
     letterSpacing: "-0.04em"
   headline:
-    fontFamily: "\"Avenir Next\", \"Helvetica Neue\", Arial, sans-serif"
+    fontFamily: "\"Inter Variable\", sans-serif"
     fontSize: "clamp(3.2rem, 6.8vw, 6rem)"
     fontWeight: 430
     lineHeight: 0.98
     letterSpacing: "-0.04em"
   title:
-    fontFamily: "\"Avenir Next\", \"Helvetica Neue\", Arial, sans-serif"
+    fontFamily: "\"Inter Variable\", sans-serif"
     fontSize: "clamp(1.55rem, 2.4vw, 2.35rem)"
     fontWeight: 470
     lineHeight: 1.1
     letterSpacing: "-0.025em"
   body:
-    fontFamily: "\"Helvetica Neue\", Helvetica, Arial, sans-serif"
+    fontFamily: "\"Inter Variable\", sans-serif"
     fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.65
     letterSpacing: "normal"
   label:
-    fontFamily: "\"Helvetica Neue\", Helvetica, Arial, sans-serif"
+    fontFamily: "\"Inter Variable\", sans-serif"
     fontSize: "0.72rem"
     fontWeight: 650
     lineHeight: 1.2
@@ -139,9 +139,13 @@ The palette pairs warm laboratory neutrals with cool living signals; the restrai
 
 ## Typography
 
-**Display Font:** Avenir Next (with Helvetica Neue, Arial, and sans-serif fallbacks)  
-**Body Font:** Helvetica Neue (with Helvetica, Arial, and sans-serif fallbacks)  
-**Label Font:** Helvetica Neue (with Helvetica, Arial, and sans-serif fallbacks)
+**Display Font:** Inter Variable with optical sizing enabled
+
+**Body Font:** Inter Variable
+
+**Label Font:** Inter Variable
+
+Inter is self-hosted through `@fontsource-variable/inter` and distributed under the SIL Open Font License 1.1. The display hierarchy uses the same family at larger optical sizes rather than depending on a separate proprietary display font.
 
 **Character:** The type system feels engineered but humane. Low-weight, tightly tracked display type creates quiet monumentality, while neutral body and label styles keep factual content easy to scan.
 

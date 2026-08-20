@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useInView, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
+import { useOpticalLineAlignment } from "./optically-aligned-text";
 
 type EncryptedTextProps = {
   text: string;
@@ -67,7 +68,7 @@ export function EncryptedText({
   encryptedClassName,
   revealedClassName,
 }: EncryptedTextProps) {
-  const ref = useRef<HTMLSpanElement>(null);
+  const ref = useOpticalLineAlignment<HTMLSpanElement>(text);
   const isInView = useInView(ref, { once: true, margin: "-8% 0px" });
   const reduceMotion = useReducedMotion();
   const [frame, setFrame] = useState<AnimationFrame>(() =>
@@ -134,7 +135,11 @@ export function EncryptedText({
           whitespace ? (
             <span key={`space-${tokenIndex}`}>{value}</span>
           ) : (
-            <span className="encrypted-text-word" key={`${value}-${tokenIndex}`}>
+            <span
+              className="encrypted-text-word"
+              data-optical-word={value}
+              key={`${value}-${tokenIndex}`}
+            >
               {value.split("").map((character, characterIndex) => {
                 const absoluteIndex = start + characterIndex;
                 const revealed = absoluteIndex < frame.revealCount;

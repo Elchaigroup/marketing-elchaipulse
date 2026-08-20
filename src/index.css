@@ -61,8 +61,8 @@
   --demo-gap: clamp(2rem, 5vw, 6rem);
   --demo-object-fraction: 0.64; /* 1.28fr of the 2fr track */
   --demo-object-max: 58rem;
-  --display: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
-  --body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --display: "Inter Variable", sans-serif;
+  --body: "Inter Variable", sans-serif;
   --display-tracking: -0.02em;
   --page-gutter: clamp(1.25rem, 3.5vw, 4.5rem);
   --section-space: clamp(4.5rem, 7.5vw, 8rem);
@@ -71,6 +71,7 @@
   color: var(--ink);
   background: var(--canvas-surface);
   font-family: var(--body);
+  font-optical-sizing: auto;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -646,8 +647,20 @@ a {
   font-size: clamp(3.2rem, 5.4vw, 6rem);
   font-weight: 470;
   letter-spacing: var(--display-tracking);
-  line-height: 1.04;
-  text-wrap: wrap;
+  line-height: 1.08;
+  text-wrap: balance;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.optically-aligned-text {
+  display: inline;
+}
+
+.optically-aligned-word,
+.encrypted-text-word {
+  display: inline-block;
+  transform: translateX(var(--optical-line-shift, 0));
 }
 
 .pulse-hero-description {
@@ -974,8 +987,10 @@ a {
   font-size: clamp(3.2rem, 5.2vw, 6rem);
   font-weight: 430;
   letter-spacing: var(--display-tracking);
-  line-height: 1;
+  line-height: 1.07;
   text-wrap: balance;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 /* Structural content blocks (Hero-reference hierarchy).
@@ -1292,7 +1307,8 @@ a {
   font-size: clamp(1.55rem, 2.4vw, 2.35rem);
   font-weight: 470;
   letter-spacing: -0.025em;
-  line-height: 1.08;
+  line-height: 1.12;
+  text-wrap: balance;
 }
 
 .pulse-thesis-methods p,
@@ -2132,7 +2148,7 @@ a {
   .pulse-hero h1 {
     max-width: 100%;
     font-size: clamp(2.75rem, 12.1vw, 3.2rem);
-    line-height: 1.04;
+    line-height: 1.08;
     letter-spacing: var(--display-tracking);
   }
 
@@ -2141,7 +2157,7 @@ a {
   .pulse-thesis h2,
   .pulse-closing h2 {
     font-size: clamp(2.5rem, 10.5vw, 3rem);
-    line-height: 1;
+    line-height: 1.07;
   }
 
   .pulse-hero-description {
@@ -2319,8 +2335,7 @@ a {
   background: rgba(0, 0, 0, 0.7);
   color: #fff;
   font-size: 0.65rem;
-  font-family: monospace;
+  font-family: var(--body);
   border-radius: 3px;
   pointer-events: none;
 }
-
