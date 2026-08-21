@@ -1498,6 +1498,127 @@ a {
   line-height: 1.5;
 }
 
+.pulse-faq {
+  background: var(--section-surface);
+  border-top: 1px solid var(--line);
+}
+
+.pulse-faq-inner {
+  width: min(100%, 50rem);
+  margin-inline: auto;
+  padding: clamp(3.5rem, 5vw, 4.75rem) var(--page-gutter);
+}
+
+.pulse-faq-heading {
+  max-width: 38rem;
+}
+
+.pulse-faq-heading h2 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(2.25rem, 3.2vw, 3.1rem);
+  font-weight: 450;
+  letter-spacing: var(--display-tracking);
+  line-height: 1.04;
+}
+
+.pulse-faq-heading > p:last-child {
+  max-width: 38rem;
+  margin: 0.75rem 0 0;
+  color: var(--muted-ink);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+.pulse-faq-accordion {
+  margin-top: clamp(1.75rem, 3vw, 2.25rem);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--section-surface) 94%, var(--teal) 6%);
+}
+
+.pulse-faq-item {
+  border-color: var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.pulse-faq-item:last-child {
+  border-bottom: 0;
+}
+
+.pulse-faq-trigger {
+  min-height: 3.4rem;
+  padding: 0.8rem 1.1rem;
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 0.98rem;
+  font-weight: 620;
+  line-height: 1.4;
+  text-align: left;
+  text-decoration: none;
+  transition: color 180ms ease, background-color 180ms ease;
+}
+
+.pulse-faq-trigger svg {
+  color: var(--muted-ink);
+}
+
+.accordion-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows 180ms cubic-bezier(0.4, 0, 1, 1),
+    visibility 0s linear 180ms;
+}
+
+.accordion-content[data-state="open"] {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition:
+    grid-template-rows 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 0s;
+}
+
+.accordion-content-clip {
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pulse-faq-trigger:hover {
+    color: var(--teal-dark);
+    background: color-mix(in srgb, var(--teal) 7%, transparent);
+    text-decoration: none;
+  }
+}
+
+.pulse-faq-answer {
+  padding: 0 3.25rem 1.15rem 1.1rem;
+}
+
+.pulse-faq-answer p {
+  max-width: 65ch;
+  margin: 0;
+  color: var(--muted-ink);
+  font-size: 0.96rem;
+  line-height: 1.6;
+}
+
+.pulse-faq-contact {
+  margin: 1.25rem 0 0;
+  color: var(--muted-ink);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.pulse-faq-contact a {
+  color: var(--ink);
+  font-weight: 620;
+  text-underline-offset: 0.2em;
+}
+
 .pulse-closing {
   position: relative;
   display: grid;
@@ -1972,6 +2093,10 @@ a {
     padding: var(--section-space) 1.25rem;
   }
 
+  .pulse-faq-inner {
+    padding-inline: 1.25rem;
+  }
+
   .pulse-thesis-result {
     grid-template-columns: 1fr;
     gap: 0.75rem;
@@ -2038,6 +2163,24 @@ a {
 }
 
 @media (max-width: 480px) {
+  .pulse-faq-inner {
+    padding-block: 3.25rem;
+  }
+
+  .pulse-faq-trigger {
+    min-height: 3.25rem;
+    padding: 0.85rem 0.9rem;
+    font-size: 0.92rem;
+  }
+
+  .pulse-faq-answer {
+    padding: 0 2.6rem 1rem 0.9rem;
+  }
+
+  .pulse-faq-answer p {
+    font-size: 0.9rem;
+  }
+
   .pulse-thesis-visual {
     min-height: 520px;
   }
@@ -2063,6 +2206,12 @@ a {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .accordion-content,
+  .accordion-content[data-state="open"],
+  .pulse-faq-trigger svg {
+    transition-duration: 0.01ms;
+  }
+
   .pulse-brand-word-crop {
     transition: opacity 120ms ease-out;
   }

@@ -10,6 +10,7 @@ import {
 import { useEffect, useRef } from "react";
 import { AnomalousMatterHero } from "@/components/ui/anomalous-matter-hero";
 import { BrandLockup } from "@/components/ui/brand-lockup";
+import { FAQSection } from "@/components/ui/faq-section";
 import { MotionAwareVideo } from "@/components/ui/motion-aware-video";
 import { OpticallyAlignedText } from "@/components/ui/optically-aligned-text";
 import { ScrollMotion } from "@/components/ui/scroll-motion";
@@ -228,6 +229,8 @@ function App() {
       </section>
 
       <SecurityStory />
+
+      <FAQSection />
 
       <section id="briefing" className="pulse-closing" aria-labelledby="closing-title">
         <div className="pulse-closing-orb" aria-hidden="true" data-reveal="closing-orb">
